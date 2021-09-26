@@ -31,19 +31,19 @@ func TestB(t *testing.T) {
 }
 
 type child struct {
-	cname string
+	Name float64
 }
 
 type S struct {
 	F    float32 `species:"gopher" color:"blue"`
-	name string
+	Name string
 	Food []int
-	s    struct{ age int }
 	child
+	s struct{ age int }
 }
 
-func (s *S) Me(args ...int) int {
-	return args[0] + 1
+func (s S) Me(args ...interface{}) {
+	fmt.Println("call==>", args)
 }
 
 func Me(a int, args ...interface{}) int {
@@ -72,7 +72,6 @@ func TestC(t *testing.T) {
 	var ty reflect.Type
 	ty = reflect.TypeOf(2)
 	fmt.Println(ty.Bits())
-	fmt.Println("-----------")
 
 	ch := make(chan<- int)
 	ty = reflect.TypeOf(ch)
@@ -98,9 +97,8 @@ func TestC(t *testing.T) {
 			fmt.Println(ty.Out(i))
 		}
 	}
-
-	fmt.Println("-----------")
-	ty = reflect.TypeOf(S{})
+	v := S{}
+	ty = reflect.TypeOf(v)
 	if ty.Kind() == reflect.Struct {
 		for i := 0; i < ty.NumField(); i++ {
 			field := ty.Field(i)
@@ -108,8 +106,17 @@ func TestC(t *testing.T) {
 		}
 		idx := []int{3, 0}
 		fmt.Println(ty.FieldByIndex(idx))
-		fmt.Println(ty.FieldByNameFunc(func(s string) bool { return s == "Me" }))
+		fmt.Println(ty.FieldByNameFunc(func(s string) bool { return s == "Name" }))
+		fmt.Println(ty.NumMethod())
+		for j := 0; j < ty.NumMethod(); j++ {
+			method := ty.Method(j)
+			fmt.Printf("func=%v, index=%d, name=%s, pkg=%v, type=%v\n", method.Func, method.Index, method.Name, method.PkgPath, method.Type)
+			fmt.Println("------s-----")
+			fmt.Println(method.Type.In(1).Kind(), method.Type.In(1).Elem())
+			fmt.Println("------s-----")
+			ps := reflect.New(method.Type.In(1))
+			method.Func.Call([]reflect.Value{reflect.ValueOf(v), ps})
+		}
 	}
-	fmt.Println("--------e---")
 
 }
