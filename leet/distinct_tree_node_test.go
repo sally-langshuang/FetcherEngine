@@ -23,6 +23,9 @@ func TestDistinct(t *testing.T)  {
 }
 
 func TestK(t *testing.T)  {
+	yy := []int{1, 2}
+
+	fmt.Println(yy[3:])
 	type X struct {
 		V int
 		Y *X
