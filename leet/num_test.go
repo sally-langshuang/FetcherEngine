@@ -4,18 +4,35 @@ import (
 	"testing"
 )
 
+func TestNum5(t *testing.T)  {
+	tests := []struct{s , exp string} {
+		{"babad", "bab"},
+		{"cbbd", "bb"},
+		{"aacabdkacaa", "aca"},
+		{"a", "a"},
+		{"ac", "a"},
+	}
+	for _, row := range tests {
+		if res:= longestPalindrome(row.s); res != row.exp {
+			t.Errorf("%v != %v", res, row.exp)
+		} else {
+			t.Logf("right!!!")
+		}
+	}
+}
 func TestNum4(t *testing.T)  {
 	tests:= []struct{
 		nums1, nums2 []int
 		exp float64
 	} {
+		{[]int{1, 4},  []int{2, 3, 5, 6}, 3.5},
 		{[]int{1, 3}, []int{2}, 2},
 		{[]int{1, 2}, []int{3, 4}, 2.5},
 		{[]int{0, 0}, []int{0, 0}, 0},
 		{[]int{}, []int{1}, 1},
 	}
 	for _, row:= range tests {
-		if res:= findMedianSortedArrays(row.nums1, row.nums2); res != row.exp {
+		if res:= findMedianSortedArrays2(row.nums1, row.nums2); res != row.exp {
 			t.Errorf("%v != %v", res, row.exp)
 		} else {
 			t.Logf("right!!!")
