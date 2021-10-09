@@ -90,7 +90,7 @@ type FiniteQueueArr struct {
 	head, tail int
 }
 
-func (q FiniteQueueArr) Emtpy() bool {
+func (q FiniteQueueArr) Empty() bool {
 	return q.tail == q.head
 }
 
@@ -108,7 +108,7 @@ func (q FiniteQueueArr) Push(val int) error {
 }
 
 func (q FiniteQueueArr) Pop() (val int, e error) {
-	if q.Emtpy() {
+	if q.Empty() {
 		return -1, fmt.Errorf("cannot pop from empty queue")
 	}
 	val = q.Arr[q.head]
