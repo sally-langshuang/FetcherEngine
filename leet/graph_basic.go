@@ -45,31 +45,73 @@ type Set interface{
 	Predecessor(s Set, x *Element) *Element
 }
 
-// 有限栈
-
-type Stack1 struct {
-	Arr []int
-	TopToPushIdx int
+// finite length
+type FiniteIntElementSet interface {
+	Empty() bool
+	Full() bool
+	Push(int) error
+	Pop() (int, error)
 }
 
-func (s Stack1) Empty() bool {
-	return s.TopToPushIdx == 0
+type FiniteStackArr struct {
+	Arr        []int
+	TopSuccIdx int
 }
 
-func (s Stack1) Push(val int) error {
-	if s.TopToPushIdx == len(s.Arr) {
-		return fmt.Errorf("stack overflows")
+func (s FiniteStackArr) Empty() bool {
+	return s.TopSuccIdx == 0
+}
+
+func (s FiniteStackArr) Full() bool {
+	return s.TopSuccIdx == len(s.Arr)
+}
+
+func (s FiniteStackArr) Push(val int) error {
+	if s.Full() {
+		return fmt.Errorf("Stack overflows, cannot push")
 	}
-	s.Arr[s.TopToPushIdx] = val
-	s.TopToPushIdx += 1
+	s.Arr[s.TopSuccIdx] = val
+	s.TopSuccIdx += 1
 	return nil
 }
 
-func (s Stack1) Pop() (v int, e error){
+func (s FiniteStackArr) Pop() (v int, e error){
 	if s.Empty() {
 		return -1, fmt.Errorf("no element to pop")
 	}
-	v = s.Arr[s.TopToPushIdx - 1]
-	s.TopToPushIdx -= 1
+	v = s.Arr[s.TopSuccIdx- 1]
+	s.TopSuccIdx -= 1
+	return
+}
+
+// finite length queue
+type FiniteQueueArr struct {
+	Arr []int
+	head, tail int
+}
+
+func (q FiniteQueueArr) Emtpy() bool {
+	return q.tail == q.head
+}
+
+func (q FiniteQueueArr) Full() bool {
+	return q.tail % len(q.Arr) == q.head
+}
+
+func (q FiniteQueueArr) Push(val int) error {
+	if q.Full() {
+		return fmt.Errorf("cannot push to full queue")
+	}
+	q.Arr[q.tail] = val
+	q.tail += 1
+	return nil
+}
+
+func (q FiniteQueueArr) Pop() (val int, e error) {
+	if q.Emtpy() {
+		return -1, fmt.Errorf("cannot pop from empty queue")
+	}
+	val = q.Arr[q.head]
+	q.head -= 1
 	return
 }
