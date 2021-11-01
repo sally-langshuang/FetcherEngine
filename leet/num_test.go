@@ -1,9 +1,13 @@
 package leet
 
 import (
+	"fmt"
 	"testing"
 )
 
+func TestNum8(t *testing.T)  {
+	fmt.Println(myAtoi("-91283472332"))
+}
 func TestNum5(t *testing.T)  {
 	tests := []struct{s , exp string} {
 		{"babad", "bab"},
