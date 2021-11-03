@@ -5,6 +5,22 @@ import (
 	"testing"
 )
 
+func TestQuick(t *testing.T) {
+	//wg := sync.WaitGroup{}
+	//wg.Add(2)
+	//Quick([]int{-2,1,3,4,7,8,100,22}, 2, 2, &wg)
+	tt:= []struct {
+		Nums []int
+	}{{[]int{1, 4, 8, 22, 7, 3 , 100, -2}}}
+	for _, x:= range tt {
+		Quick(x.Nums, 0, len(x.Nums) - 1, nil)
+		fmt.Println(x.Nums)
+	}
+}
+
+func TestNum58(t *testing.T)  {
+	fmt.Println(lengthOfLastWord("   fly me   to   the moon"))
+}
 func TestNum8(t *testing.T)  {
 	fmt.Println(myAtoi("-91283472332"))
 }
