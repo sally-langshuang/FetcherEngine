@@ -1,8 +1,8 @@
 package leet
 
 import (
-	"testing"
 	"fmt"
+	"testing"
 )
 
 func TestQuick(t *testing.T) {
@@ -21,8 +21,11 @@ func TestQuick(t *testing.T) {
 func TestNum58(t *testing.T)  {
 	fmt.Println(lengthOfLastWord("   fly me   to   the moon"))
 }
+var i = 0
+var j = 2
 func TestNum8(t *testing.T)  {
-	fmt.Println(myAtoi("-91283472332"))
+	arr := []int{1, 2, 3}
+	fmt.Println(arr[3:])
 }
 
 func TestNum5(t *testing.T)  {

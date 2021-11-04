@@ -1,4 +1,4 @@
-package leet
+package tree
 
 
 // Definition for a binary tree node.
@@ -18,7 +18,7 @@ func max(vals ...int) (res int) {
 }
 
 
-func dp(root *TreeNode, k, t int) (res int) {
+func dp34(root *TreeNode, k, t int) (res int) {
 	for j:= 0; j < t; j++ {
 	}
 	return
