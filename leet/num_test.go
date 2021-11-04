@@ -1,10 +1,10 @@
 package leet
 
 import (
-	"fmt"
 	"testing"
 )
 
+<<<<<<< HEAD
 func TestQuick(t *testing.T) {
 	//wg := sync.WaitGroup{}
 	//wg.Add(2)
@@ -24,6 +24,8 @@ func TestNum58(t *testing.T)  {
 func TestNum8(t *testing.T)  {
 	fmt.Println(myAtoi("-91283472332"))
 }
+=======
+>>>>>>> parent of db284dd (num8)
 func TestNum5(t *testing.T)  {
 	tests := []struct{s , exp string} {
 		{"babad", "bab"},

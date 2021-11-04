@@ -1,5 +1,6 @@
 package leet
 
+
 func myAtoi(s string) (res int) {
 	const (
 		stripLStep =  1 << iota
@@ -9,7 +10,7 @@ func myAtoi(s string) (res int) {
 
 	step := stripLStep
 	sign := 1
-	for _, i := range s {
+	for i:= range s {
 		switch step {
 		case stripLStep:
 			if i == ' ' {
@@ -21,30 +22,17 @@ func myAtoi(s string) (res int) {
 		case sginStep:
 			if i == '-' {
 				sign = -1
-			}
-			step = step << 1
-			if i == '-' || i == '+' {
-				continue
-			}
-			if i < '0' || i > '9' {
-				return res
+			} else {
+				step = step << 1
 			}
 			fallthrough
 		case readStep:
-			if i >= '0' && i <='9' {
-				res = res * 10 + int(i - '0')
+			if i > '0' || i < '9' {
+				res = res*10 + i - '0'
 			} else {
-				goto stop
-			}
-			if res * sign < int(int32(-1 << 31)) {
-				res = int(int32(-1 << 31))
-				return res
-			} else if res * sign > int(int32(1 << 31 -1)){
-				res = int(int32(1 << 31 -1))
-				return res
+				return res * sign
 			}
 		}
 	}
-	stop:
 	return res * sign
 }
