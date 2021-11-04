@@ -3,7 +3,7 @@ package test_demo
 import (
 	//"bou.ke/monkey"
 	"fmt"
-	"github.com/agiledragon/gomonkey"
+	//"github.com/agiledragon/gomonkey"
 	//"github.com/sally-langshuang/FetcherEngine/test_demo/infra/os-encap"
 	"github.com/smartystreets/goconvey/convey"
 	"testing"
@@ -44,11 +44,11 @@ func netWorkFunc(a,b int) (int,error){
 
 func TestMockFunc(t *testing.T) {
 	convey.Convey("TestMockFunc1", t, func() {
-		var p1 = gomonkey.ApplyFunc(netWorkFunc, func(a, b int) (int, error) {
-			fmt.Println("in mock function")
-			return a+b, nil
-		})
-		defer p1.Reset()
+		//var p1 = gomonkey.ApplyFunc(netWorkFunc, func(a, b int) (int, error) {
+		//	fmt.Println("in mock function")
+		//	return a+b, nil
+		//})
+		//defer p1.Reset()
 
 		sum, err := logicFunc(10, 20)
 		convey.So(sum, convey.ShouldEqual, 30)

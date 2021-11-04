@@ -20,27 +20,27 @@ func max(vals ...int) (res int) {
 
 func dp(root *TreeNode, k, t int) (res int) {
 	for j:= 0; j < t; j++ {
-		val := root.Val + maxValue(root.Left, t) + maxValue(root.Right, k - t)
-		if val > res {
-			res = val
-		}
 	}
 	return
 }
+const maxK = 10
+var dpRes = make(map[*Tree][maxK]int, 0)
 
+func setRes(tree *Tree, t, val int)  {
+	res := dpRes[tree]
+	res[t] = val
+}
 
-func maxValue(root *TreeNode, k int) (res int){
+func getRes(tree *Tree, idx int) int {
+	res := dpRes[tree]
+	return res[idx]
+}
+
+func maxValue(root *Tree, k int) (res int){
 	if k == 0 || root == nil {
 		return
 	}
 
-	res = dp(root, k, 0)
-	for i:= 1; i <= k; i++ {
-		val := dp(root, k, i) + root.Val
-		if val > res {
-			res = val
-		}
-	}
 	return
 
 }
