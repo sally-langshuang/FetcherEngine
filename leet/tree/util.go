@@ -12,6 +12,25 @@ type TreeNode struct {
 	Left  *TreeNode
 	Right *TreeNode
 }
+type Graph struct {
+	graph []string
+}
+func (g Graph) Width() int {
+	if g.graph == nil || len(g.graph) == 0 {
+		return 0
+	}
+	return len(g.graph[0])
+}
+
+func (g Graph)String() string {
+	var b strings.Builder
+	fmt.Fprint(&b, fmt.Sprintf("+%s+\n",strings.Repeat("-", g.Width())))
+	for _, l := range g.graph {
+		fmt.Fprintf(&b, fmt.Sprintf("|%s|\n", l))
+	}
+	fmt.Fprint(&b, fmt.Sprintf("+%s+\n",strings.Repeat("-", g.Width())))
+	return b.String()
+}
 
 func getWidth(graph []string) int {
 	if graph == nil || len(graph) == 0 {
@@ -20,34 +39,39 @@ func getWidth(graph []string) int {
 	return len(graph[0])
 }
 func layElemS(i, sw, ew int, e string)  string{
-	if i + ew >= sw || len(e) > ew{
+	if i + ew > sw || len(e) > ew{
 		panic("err")
 	}
 	return strings.Repeat(" ", i) + fmt.Sprintf("%-[2]*[1]s",e, ew) + strings.Repeat(" ", sw - i - ew)
 }
 func layElem(i, sw, ew, e int)  string{
-		if i + ew >= sw || len(strconv.Itoa(e)) > ew{
+		if i + ew > sw || len(strconv.Itoa(e)) > ew{
 			panic("err")
 		}
 		return strings.Repeat(" ", i) + fmt.Sprintf("%-[2]*[1]d",e, ew) + strings.Repeat(" ", sw - i - ew)
 }
 
-func getGraphLink(t *TreeNode, elemWidth int) (offset int, graph []string) {
+func getGraphLink(t *TreeNode, elemWidth int) (offset int, graph Graph) {
 	if t == nil || elemWidth < 1 {
 		return
 	}
 	if t.Left == nil && t.Right == nil {
-		return elemWidth - 1 / 2, []string{layElem(0, len(strconv.Itoa(t.Val)), elemWidth,  t.Val)}
+		line:= layElem(0, elemWidth, elemWidth,  t.Val)
+		o := (elemWidth - 1) / 2
+		return o, Graph{[]string{line}}
 	}
 	lo, lg := getGraphLink(t.Left, elemWidth)
 	ro, rg := getGraphLink(t.Right, elemWidth)
-	lw, rw := getWidth(lg), getWidth(rg)
+	lw, rw := lg.Width(), rg.Width()
 	if lw == 0 || rw == 0 {
 		if lw == 0 {
 			lo, lg, lw = ro, rg, rw
 		}
-		graph := []string{layElem(lo, lw, elemWidth, t.Val), layElemS(lo, lw, elemWidth, "|")}
-		graph = append(graph, lg...)
+		lineRoot := layElem(lo, lw, elemWidth, t.Val)
+		lineLinke := layElemS(lo, lw, elemWidth, "|")
+		g := []string{lineRoot, lineLinke}
+		g = append(g, lg.graph...)
+		return lo, Graph{graph: g}
 	}
 	// todo
 	return
@@ -194,4 +218,3 @@ func exactInt(s string) NumArr {
 	}
 	return NumArr{arr: res}
 }
-// [1,2,3,4,null,2,4,null,null,4]
