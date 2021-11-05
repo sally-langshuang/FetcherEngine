@@ -19,9 +19,7 @@ func buildTree(preorder []int, inorder []int) (root *TreeNode) {
 	var i int
 	for ; i < len(inorder);i++ {
 		if inorder[i] == preorder[0] {
-			if i > 0 {
-				break
-			}
+			break
 		}
 	}
 	root.Left = buildTree(preorder[1: 1+i], inorder[0: i])

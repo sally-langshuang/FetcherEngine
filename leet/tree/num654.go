@@ -8,11 +8,7 @@ package tree
  *     Right *TreeNode
  * }
  */
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
+
 
 func dp654(nums []int, l, h int) (res *TreeNode) {
 	if l == h {
