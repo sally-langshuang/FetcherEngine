@@ -14,6 +14,7 @@ type TreeNode struct {
 }
 type Graph struct {
 	graph []string
+	offSet int
 }
 
 func stringLen(s string) (l int) {
@@ -79,10 +80,10 @@ func layElem(i, sw, ew, e int)  string{
 		return strings.Repeat(" ", i) + fmt.Sprintf("%-[2]*[1]d",e, ew) + strings.Repeat(" ", sw - i - ew)
 }
 
-func getOneValString(t *TreeNode, elemWidth int) (offset int, graph Graph) {
+func getOneValString(t *TreeNode, elemWidth int) (graph Graph) {
 	line:= layElem(0, elemWidth, elemWidth,  t.Val)
 	o := (elemWidth - 1) / 2
-	return o, Graph{[]string{line}}
+	return Graph{graph:[]string{line}, offSet: o}
 }
 
 func expandGraph(offset int, graph Graph, left, right, up, down int) (o int, g Graph) {
@@ -104,17 +105,17 @@ func expandGraph(offset int, graph Graph, left, right, up, down int) (o int, g G
 	return o, g
 }
 
-func mergeTwoGraph(lo int, lg Graph, ro int, rg Graph, gap int) (lOffset, rOffset int, graph Graph) {
+func mergeTwoGraph(lg Graph, rg Graph, gap int) (lOffset, rOffset int, graph Graph) {
 	if lg.Height() == 0 || rg.Height() == 0 || gap < 0{
 		panic("err")
 	}
-	rOffset = ro + lg.Width() + gap
-	lOffset = lo
+	rOffset = rg.offSet + lg.Width() + gap
+	lOffset = lg.offSet
 	graph = Graph{graph: make([]string, 0)}
 	if lg.Height() < rg.Height() {
-		lo, lg = expandGraph(lo, lg, 0, 0, 0, rg.Height() - lg.Height())
+		_, lg = expandGraph(lg.offSet, lg, 0, 0, 0, rg.Height() - lg.Height())
 	} else if lg.Height() > rg.Height() {
-		ro, rg = expandGraph(ro, rg, 0, 0, 0, lg.Height() - rg.Height())
+		_, rg = expandGraph(rg.offSet, rg, 0, 0, 0, lg.Height() - rg.Height())
 	}
 	for i:=0; i < lg.Height(); i++{
 		graph.graph = append(graph.graph, lg.graph[i] + strings.Repeat(" ", gap) + rg.graph[i])
@@ -140,46 +141,42 @@ func genLinkLine(lo, to, ro, w int) string {
 	return layElemS(o, w, stringLen(x), x)
 }
 
-func getGraphLink(t *TreeNode, elemWidth int) (offset int, graph Graph) {
+func getGraphLink(t *TreeNode, elemWidth int) (graph Graph) {
 	if t == nil || elemWidth < 1 {
 		return
 	}
-	to, tg := getOneValString(t, elemWidth)
+	tg := getOneValString(t, elemWidth)
 	if t.Left == nil && t.Right == nil {
-		return to, tg
+		return tg
 	}
-	lo, lg := getGraphLink(t.Left, elemWidth)
-	ro, rg := getGraphLink(t.Right, elemWidth)
+	lg := getGraphLink(t.Left, elemWidth)
+	rg := getGraphLink(t.Right, elemWidth)
 	if t.Right == nil {
-		rootLine := layElem(lo + 2, lg.Width() + 2, elemWidth, t.Val)
-		linkline := genLinkLine(lo, lo + 2, -1, lg.Width() + 2)
-		_, lg = expandGraph(lo, lg, 0, 2, 0, 0)
-		g := Graph{graph: make([]string, 0)}
+		rootLine := layElem(lg.offSet + 2, lg.Width() + 2, elemWidth, t.Val)
+		linkline := genLinkLine(lg.offSet, lg.offSet + 2, -1, lg.Width() + 2)
+		_, lg = expandGraph(lg.offSet, lg, 0, 2, 0, 0)
+		g := Graph{graph: make([]string, 0), offSet: lg.offSet + 2}
 		g.RPush(rootLine, linkline)
 		g.RPush(lg.graph...)
-		return lo + 2, g
+		return g
 	}
 	if t.Left == nil {
 		rootLine := layElem(0, rg.Width() + 2, elemWidth, t.Val)
-		linkline := genLinkLine(-1, 0, ro + 2, rg.Width() + 2)
-		_, rg = expandGraph(ro, rg, 2, 0, 0, 0)
-		g := Graph{graph: make([]string, 0)}
+		linkline := genLinkLine(-1, 0, rg.offSet + 2, rg.Width() + 2)
+		_, rg = expandGraph(rg.offSet, rg, 2, 0, 0, 0)
+		g := Graph{graph: make([]string, 0), offSet: 0}
 		g.RPush(rootLine, linkline)
 		g.RPush(rg.graph...)
-		return 0, g
+		return g
 	}
-	lo, ro, gc := mergeTwoGraph(lo, lg, ro, rg, 1)
-	to = (lo + ro) / 2
-	rootLine := layElem(to, gc.Width(), elemWidth, t.Val)
-	linkLine := genLinkLine(lo, to, ro, gc.Width())
-	g := Graph{graph: make([]string, 0)}
+	lo, ro, gc := mergeTwoGraph(lg, rg, 1)
+	tg.offSet = (lo + ro) / 2
+	rootLine := layElem(tg.offSet, gc.Width(), elemWidth, t.Val)
+	linkLine := genLinkLine(lo, tg.offSet, ro, gc.Width())
+	g := Graph{graph: make([]string, 0), offSet: tg.offSet}
 	g.RPush(rootLine, linkLine)
 	g.RPush(gc.graph...)
-	return to, g
-}
-
-func mergeGraph(leftGraph, rightGraph[]string)  {
-
+	return g
 }
 
 func (t *TreeNode) LevelsNode() [][]*TreeNode {
