@@ -15,11 +15,27 @@ type TreeNode struct {
 type Graph struct {
 	graph []string
 }
+func (g Graph) RPush(lines...string) Graph {
+	g.graph = append(g.graph, lines...)
+	return g
+}
+
+func (g Graph) LPush(lines...string) Graph{
+	g.graph = append(lines, g.graph...)
+	return g
+}
 func (g Graph) Width() int {
 	if g.graph == nil || len(g.graph) == 0 {
 		return 0
 	}
 	return len(g.graph[0])
+}
+
+func (g Graph) Height() int {
+	if g.graph == nil{
+		return 0
+	}
+	return len(g.graph)
 }
 
 func (g Graph)String() string {
@@ -51,30 +67,96 @@ func layElem(i, sw, ew, e int)  string{
 		return strings.Repeat(" ", i) + fmt.Sprintf("%-[2]*[1]d",e, ew) + strings.Repeat(" ", sw - i - ew)
 }
 
+func getOneValString(t *TreeNode, elemWidth int) (offset int, graph Graph) {
+	line:= layElem(0, elemWidth, elemWidth,  t.Val)
+	o := (elemWidth - 1) / 2
+	return o, Graph{[]string{line}}
+}
+
+func expandGraph(offset int, graph Graph, left, right, up, down int) (o int, g Graph) {
+	if left < 0 || right < 0 || up < 0 || down < 0 || graph.graph == nil ||  len(graph.graph) == 0 {
+		panic("err")
+	}
+	o = offset + left
+	g = Graph{graph: make([]string, len(graph.graph) + up + down)}
+	blandLine := strings.Repeat(" ", left + graph.Width() + right)
+	for i := 0; i < up; i++ {
+		g.graph[i] = blandLine
+	}
+	for i, _ := range graph.graph {
+		g.graph[up + i] = strings.Repeat(" ", left) + graph.graph[i] + strings.Repeat(" ", right)
+	}
+	for i := up + graph.Height(); i < up + graph.Height() + down ; i++ {
+		g.graph[i] = blandLine
+	}
+	return o, g
+}
+
+func mergeTwoGraph(lo int, lg Graph, ro int, rg Graph, gap int) (lOffset, rOffset int, graph Graph) {
+	if lg.Height() == 0 || rg.Height() == 0 || gap < 0{
+		panic("err")
+	}
+	rOffset = ro + lg.Width() + gap
+	lOffset = lo
+	graph = Graph{graph: make([]string, 0)}
+	if lg.Height() < rg.Height() {
+		lo, lg = expandGraph(lo, lg, 0, 0, 0, rg.Height() - lg.Height())
+	} else if lg.Height() > rg.Height() {
+		ro, rg = expandGraph(ro, rg, 0, 0, 0, lg.Height() - rg.Height())
+	}
+	for i:=0; i < lg.Height(); i++{
+		graph.graph = append(graph.graph, lg.graph[i] + strings.Repeat(" ", gap) + rg.graph[i])
+	}
+	return
+}
+func genLinkLine(lo, to, ro, w int) string {
+	var x string
+	if ro == -1 {
+		x = "┌" + strings.Repeat("─", to - lo - 1) + "┘"
+	} else if lo == -1 {
+		x = "└" + strings.Repeat("─", ro - to - 1) + "┐"
+	} else {
+		x = "┌" + strings.Repeat("─", to - lo - 1) + "┴" + strings.Repeat("─", ro - to - 1) + "┐"
+	}
+	return layElemS(lo, w, len(x), x)
+}
+
 func getGraphLink(t *TreeNode, elemWidth int) (offset int, graph Graph) {
 	if t == nil || elemWidth < 1 {
 		return
 	}
+	to, tg := getOneValString(t, elemWidth)
 	if t.Left == nil && t.Right == nil {
-		line:= layElem(0, elemWidth, elemWidth,  t.Val)
-		o := (elemWidth - 1) / 2
-		return o, Graph{[]string{line}}
+		return to, tg
 	}
 	lo, lg := getGraphLink(t.Left, elemWidth)
 	ro, rg := getGraphLink(t.Right, elemWidth)
-	lw, rw := lg.Width(), rg.Width()
-	if lw == 0 || rw == 0 {
-		if lw == 0 {
-			lo, lg, lw = ro, rg, rw
-		}
-		lineRoot := layElem(lo, lw, elemWidth, t.Val)
-		lineLinke := layElemS(lo, lw, elemWidth, "|")
-		g := []string{lineRoot, lineLinke}
-		g = append(g, lg.graph...)
-		return lo, Graph{graph: g}
+	if t.Right == nil {
+		rootLine := layElem(lo + 2, lg.Width() + 2, elemWidth, t.Val)
+		linkline := genLinkLine(lo, lo + 2, -1, lg.Width() + 2)
+		_, lg = expandGraph(lo, lg, 0, 2, 0, 0)
+		g := Graph{graph: make([]string, 0)}
+		g.RPush(rootLine, linkline)
+		g.RPush(lg.graph...)
+		return lo + 2, lg
 	}
-	// todo
-	return
+	if t.Left == nil {
+		rootLine := layElem(0, rg.Width() + 2, elemWidth, t.Val)
+		linkline := genLinkLine(-1, 0, ro + 2, rg.Width() + 2)
+		_, rg = expandGraph(ro, rg, 2, 0, 0, 0)
+		g := Graph{graph: make([]string, 0)}
+		g.RPush(rootLine, linkline)
+		g.RPush(rg.graph...)
+		return 0, rg
+	}
+	lo, ro, gc := mergeTwoGraph(lo, lg, ro, rg, 1)
+	to = (lo + ro) / 2
+	rootLine := layElem(to, gc.Width(), elemWidth, t.Val)
+	linkLine := genLinkLine(lo, to, ro, gc.Width())
+	g := Graph{graph: make([]string, 0)}
+	g.RPush(rootLine, linkLine)
+	g.RPush(gc.graph...)
+	return to, g
 }
 
 func mergeGraph(leftGraph, rightGraph[]string)  {
