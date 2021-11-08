@@ -15,7 +15,19 @@ type TreeNode struct {
 type Graph struct {
 	graph []string
 }
-func (g Graph) RPush(lines...string) Graph {
+
+func stringLen(s string) (l int) {
+	for _, x := range s {
+		if x > 0x4E00 {
+			l += 2
+		} else {
+			l += 1
+		}
+	}
+	return
+}
+
+func (g *Graph) RPush(lines...string) *Graph {
 	g.graph = append(g.graph, lines...)
 	return g
 }
@@ -52,16 +64,16 @@ func getWidth(graph []string) int {
 	if graph == nil || len(graph) == 0 {
 		return 0
 	}
-	return len(graph[0])
+	return stringLen(graph[0])
 }
 func layElemS(i, sw, ew int, e string)  string{
-	if i + ew > sw || len(e) > ew{
+	if i + ew > sw || stringLen(e) > ew{
 		panic("err")
 	}
 	return strings.Repeat(" ", i) + fmt.Sprintf("%-[2]*[1]s",e, ew) + strings.Repeat(" ", sw - i - ew)
 }
 func layElem(i, sw, ew, e int)  string{
-		if i + ew > sw || len(strconv.Itoa(e)) > ew{
+		if i + ew > sw || stringLen(strconv.Itoa(e)) > ew{
 			panic("err")
 		}
 		return strings.Repeat(" ", i) + fmt.Sprintf("%-[2]*[1]d",e, ew) + strings.Repeat(" ", sw - i - ew)
@@ -111,14 +123,21 @@ func mergeTwoGraph(lo int, lg Graph, ro int, rg Graph, gap int) (lOffset, rOffse
 }
 func genLinkLine(lo, to, ro, w int) string {
 	var x string
+	var o int
 	if ro == -1 {
 		x = "┌" + strings.Repeat("─", to - lo - 1) + "┘"
+		o = lo
 	} else if lo == -1 {
 		x = "└" + strings.Repeat("─", ro - to - 1) + "┐"
+		o = to
 	} else {
 		x = "┌" + strings.Repeat("─", to - lo - 1) + "┴" + strings.Repeat("─", ro - to - 1) + "┐"
+		o = lo
 	}
-	return layElemS(lo, w, len(x), x)
+	if o + stringLen(x) > w {
+		panic("err")
+	}
+	return layElemS(o, w, stringLen(x), x)
 }
 
 func getGraphLink(t *TreeNode, elemWidth int) (offset int, graph Graph) {
@@ -138,7 +157,7 @@ func getGraphLink(t *TreeNode, elemWidth int) (offset int, graph Graph) {
 		g := Graph{graph: make([]string, 0)}
 		g.RPush(rootLine, linkline)
 		g.RPush(lg.graph...)
-		return lo + 2, lg
+		return lo + 2, g
 	}
 	if t.Left == nil {
 		rootLine := layElem(0, rg.Width() + 2, elemWidth, t.Val)
@@ -147,7 +166,7 @@ func getGraphLink(t *TreeNode, elemWidth int) (offset int, graph Graph) {
 		g := Graph{graph: make([]string, 0)}
 		g.RPush(rootLine, linkline)
 		g.RPush(rg.graph...)
-		return 0, rg
+		return 0, g
 	}
 	lo, ro, gc := mergeTwoGraph(lo, lg, ro, rg, 1)
 	to = (lo + ro) / 2
