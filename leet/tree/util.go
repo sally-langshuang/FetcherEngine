@@ -82,7 +82,7 @@ func layElem(i, sw, ew, e int)  string{
 
 func getOneValString(t *TreeNode, elemWidth int) (graph Graph) {
 	line:= layElem(0, elemWidth, elemWidth,  t.Val)
-	o := (elemWidth - 1) / 2
+	o := 0  // 左对齐
 	return Graph{graph:[]string{line}, offSet: o}
 }
 
@@ -142,6 +142,9 @@ func genLinkLine(lo, to, ro, w int) string {
 }
 
 func getGraphLink(t *TreeNode, elemWidth int) (graph Graph) {
+	if elemWidth == -1 {
+		elemWidth = stringLen(strconv.Itoa(t.MaxVal()))
+	}
 	if t == nil || elemWidth < 1 {
 		return
 	}
@@ -211,8 +214,15 @@ func RightStripNil(arr []*TreeNode) []*TreeNode {
 	return arr[:endIdx + 1]
 }
 
-func (t TreeNode) MaxVal() int {
-	return max(t.Val, t.Left.MaxVal(), t.Right.MaxVal() )
+func (t TreeNode) MaxVal() (res int) {
+	res = t.Val
+	if t.Left != nil {
+		res = max(res, t.Left.MaxVal())
+	}
+	if t.Right != nil {
+		res = max(res, t.Right.MaxVal())
+	}
+	return res
 }
 
 func MaxDepth(t *TreeNode) int {
@@ -258,11 +268,18 @@ func (a NumArr)String() string {
 	return b.String()
 }
 
-func exactElem(s string) []string {
+func exactElem(s string) (res []string) {
+	res = make([]string, 0)
 	s = strings.TrimFunc(s, func(r rune) bool {
 		return !unicode.IsLetter(r) && !unicode.IsNumber(r)
 	})
-	return strings.Split(s, ",")
+	for _, x := range strings.Split(s, ",") {
+		y := strings.TrimFunc(x, func(r rune) bool {
+			return unicode.IsSpace(r)
+		})
+		res = append(res, y)
+	}
+	return res
 }
 
 func InitTree(s string) *TreeNode {
