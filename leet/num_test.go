@@ -5,6 +5,13 @@ import (
 	"testing"
 )
 
+func TestNum10(t *testing.T)  {
+	var b uint8
+	b =  97
+
+	fmt.Println(string(b))
+	fmt.Println()
+}
 func TestQuick(t *testing.T) {
 	//wg := sync.WaitGroup{}
 	//wg.Add(2)
