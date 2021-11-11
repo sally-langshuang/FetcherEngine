@@ -1,25 +1,29 @@
 package leet
+
+func makeMatrix(m, n int) [][]bool {
+	res := make([][]bool, m)
+	for i := 0 ; i< m; i++ {
+		res[i] = make([]bool, n)
+	}
+	return res
+}
+
 func isMatch(s string, p string) bool {
-	var i int
-	var lastChar uint8
-	for _, r := range p {
-		if 'a' <= r && r <= 'z' {
-			if string(s[i]) != string(r) {
-				return false
-			} else {
-				lastChar = s[i]
-				i++
-			}
-		} else if r == '.' {
-			lastChar = s[i]
-			i++
-		} else if r == '*' {
-			if s[i] != lastChar {
-				return false
-			} else {
-				i++
+	arr := makeMatrix(len(s) + 1, len(p) + 1)
+	arr[0][0] = true
+	// i 为 s 的长度 对应s[i-1]元素 ，以此类推j p
+	var i, j int
+	for ; i < len(s) + 1; i++ {
+		for j = 1; j<len(p) + 1; j++ {
+			if p[j - 1] == '*' {
+				arr[i][j] = arr[i][j - 2] || (arr[i - 1][j] && (s[i - 1] ==p[j - 2] || p[j - 2] == '.'))
+			}else {
+				if i == 0 {
+					continue
+				}
+				arr[i][j] = arr[i - 1][j - 1] && (s[i - 1] == p[j - 1] || p[j - 1] == '.')
 			}
 		}
 	}
-	return true
+	return arr[i-1][j-1]
 }
