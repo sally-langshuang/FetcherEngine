@@ -16,7 +16,9 @@ func isMatch(s string, p string) bool {
 	for ; i < len(s) + 1; i++ {
 		for j = 1; j<len(p) + 1; j++ {
 			if p[j - 1] == '*' {
-				arr[i][j] = arr[i][j - 2] || (i > 0 &&(arr[i - 1][j] && (s[i - 1] ==p[j - 2] || p[j - 2] == '.')))
+				// *==0 || *==+（s不为空&& p[:j]能匹配s[:i-1], .与s[i]相同）
+				//arr[i][j] = arr[i][j - 2] || (i > 0 &&(arr[i - 1][j] && (s[i - 1] ==p[j - 2] || p[j - 2] == '.')))
+				arr[i][j] = i > 0 &&(arr[i - 1][j] && (s[i - 1] ==p[j - 2] || p[j - 2] == '.')) || arr[i][j - 2]
 			}else if i > 0{
 				arr[i][j] = arr[i - 1][j - 1] && (s[i - 1] == p[j - 1] || p[j - 1] == '.')
 			}
