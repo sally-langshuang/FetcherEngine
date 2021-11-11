@@ -6,7 +6,9 @@ import (
 )
 
 func TestNum10(t *testing.T)  {
-	fmt.Println(isMatch("aaa", "a*a"))
+	s:="mississippi"
+	p:="mis*is*p*."
+	isMatch(s, p)
 
 }
 func TestQuick(t *testing.T) {
