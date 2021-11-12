@@ -32,7 +32,7 @@ func kInversePairs(n int, k int) int {
 			}else {
 				cache[cur][j] = cache[cur][j - 1] + cache[pre][j]
 				if i <= j {
-					cache[cur][j] -= cache[pre][j-i]
+					cache[cur][j] -= cache[pre][j-i] // 这里可能产生负数， 因为之前项目都对mod取模
 				}
 			}
 			cache[cur][j] %= mod
