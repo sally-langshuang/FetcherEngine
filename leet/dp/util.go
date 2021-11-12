@@ -5,7 +5,9 @@ import (
 	"strconv"
 	"strings"
 )
-
+type point struct {
+	x, y int
+}
 func findMaxElem(a [][]int)  int{
 	var res int
 	for _, i:= range a {
@@ -17,22 +19,27 @@ func findMaxElem(a [][]int)  int{
 	}
 	return res
 }
-func printA(a []int, maxWidth int) string {
+
+func printRow(a []int, maxWidth int) string {
 	b := strings.Builder{}
 	fmt.Fprintf(&b,"[")
-	for _, i:= range a {
-		fmt.Fprintf(&b, fmt.Sprintf("%-[2]*[1]d ", i, maxWidth))
+	for _, row:= range a {
+		fmt.Fprintf(&b, fmt.Sprintf("%-[2]*[1]d ", row, maxWidth))
 	}
 	fmt.Fprintf(&b,"]\n")
 	return b.String()
 }
 
-func ArrString(a [][]int) string {
+func ArrString(a [][]int, p *point) string {
 	res := ""
-	maxElem := findMaxElem(a)
-	for _, x:= range a {
-		res += printA(x, len(strconv.Itoa(maxElem)))
+	maxWidth := len(strconv.Itoa(findMaxElem(a)))
+	for i, x:= range a {
+		if p != nil && p.x == i{
+			res += strings.Repeat(" ", 1 + (maxWidth + 1) * p.y ) + "V\n"
+		}
+		res += printRow(x, maxWidth)
 	}
+	res += strings.Repeat("-", len(a[0])*(maxWidth +1)+2)+ "\n"
 	return res
 }
 func makeIntArr(m, n int) [][]int  {
