@@ -6,7 +6,14 @@ import (
 	"testing"
 )
 
+func TestNum654(t *testing.T) {
+	//输入：nums = [3,2,1,6,0,5]
+	//输出：
+	tree := InitTree("[6,3,5,null,2,0,null,null,1]")
+	tree.Print()
 
+
+}
 func TestNum5(t *testing.T) {
 	fmt.Println(Palindrome{center: 3, armLen: 4}.S(produceS("abc")))
    //fmt.Println(longestPalindrome("babad"))

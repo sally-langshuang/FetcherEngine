@@ -14,6 +14,11 @@ type TreeNode struct {
 	Right *TreeNode
 	Next  *TreeNode
 }
+
+func (tree TreeNode) Print() {
+	g :=getGraphLink(&tree,len(strconv.Itoa(tree.MaxVal())))
+	fmt.Printf("%v", g)
+}
 type Graph struct {
 	graph []string
 	offSet int
