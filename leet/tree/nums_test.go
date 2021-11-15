@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+<<<<<<< HEAD
 func TestNum106(t *testing.T)  {
 	//中序遍历 inorder = [9,3,15,20,7]
 	//后序遍历 postorder = [9,15,7,20,3]
@@ -16,6 +17,7 @@ func TestNum106(t *testing.T)  {
 	//   15   7
 	buildTree([]int{9,3,15,20,7},[]int{9,15,7,20,3}).Print()
 }
+
 func TestNum654(t *testing.T) {
 	//输入：nums = [3,2,1,6,0,5]
 	//输出：
@@ -23,7 +25,6 @@ func TestNum654(t *testing.T) {
 	tree.Print()
 	tr := constructMaximumBinaryTree([]int{3,2,1,6,0,5})
 	tr.Print()
-
 
 }
 func TestNum5(t *testing.T) {
