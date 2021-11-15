@@ -5,6 +5,11 @@ import (
 	"testing"
 )
 
+func TestNum12(t *testing.T) {
+	//1994 "MCMXCIV"
+	fmt.Println(intToRoman(1994))
+	fmt.Println(romanToInt("MCMXCIV"))
+}
 func TestNum10(t *testing.T)  {
 	s:="mississippi"
 	p:="mis*is*p*."

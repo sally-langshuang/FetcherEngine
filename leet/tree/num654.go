@@ -9,23 +9,21 @@ package tree
  * }
  */
 
-
-func dp654(nums []int, l, h int) (res *TreeNode) {
-	if l == h {
+func constructMaximumBinaryTree(nums []int) *TreeNode {
+	if len(nums) == 0 {
 		return nil
 	}
-	maxNumIdx := l
-	for i:= maxNumIdx + 1 ; i < h; i++{
-		if nums[i] > nums[maxNumIdx] {
-			maxNumIdx = i
+	maxIdx := 0
+	for i:= 0; i < len(nums); i++ {
+		if nums[i] > nums[maxIdx] {
+			maxIdx = i
 		}
 	}
-	root := TreeNode{Val: nums[maxNumIdx]}
-	root.Left = dp654(nums, 0, maxNumIdx)
-	root.Right = dp654(nums, maxNumIdx + 1, h)
+	root := TreeNode{
+		Val: nums[maxIdx],
+		Left: constructMaximumBinaryTree(nums[: maxIdx]),
+		Right: constructMaximumBinaryTree(nums[maxIdx + 1:]),
+	}
 	return &root
 }
 
-func constructMaximumBinaryTree(nums []int) (res *TreeNode) {
-	return dp654(nums, 0, len(nums))
-}
