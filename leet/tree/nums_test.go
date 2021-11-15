@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-<<<<<<< HEAD
 func TestNum106(t *testing.T)  {
 	//中序遍历 inorder = [9,3,15,20,7]
 	//后序遍历 postorder = [9,15,7,20,3]
