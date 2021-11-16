@@ -7,6 +7,20 @@ func makeMatrix(m, n int) [][]bool {
 	}
 	return res
 }
+func makeMatrixInt(m, n int) [][]int {
+	res := make([][]int, m)
+	for i := 0 ; i< m; i++ {
+		res[i] = make([]int, n)
+	}
+	return res
+}
+func makeMatrixStringArr(m, n int) [][][]string {
+	res := make([][][]string, m)
+	for i := 0 ; i< m; i++ {
+		res[i] = make([][]string, n)
+	}
+	return res
+}
 
 func isMatch(s string, p string) bool {
 	arr := makeMatrix(len(s) + 1, len(p) + 1)
