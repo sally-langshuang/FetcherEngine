@@ -6,6 +6,10 @@ import (
 )
 
 func TestNum22(t *testing.T)  {
+	//fmt.Println(AddString([]string{"1", "11"}, "(", []string{"2", "22"}))
+	fmt.Println(generateParenthesis(3))
+	fmt.Println(countParenthesisNum(3))
+	fmt.Println(generateParenthesis2(3))
 }
 func TestNum12(t *testing.T) {
 	//1994 "MCMXCIV"
