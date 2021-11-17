@@ -5,6 +5,9 @@ import (
 	"testing"
 )
 
+func TestNum318(t *testing.T)  {
+	fmt.Println(maxProduct([]string{"abcw","baz","foo","bar","xtfn","abcdef"}) )// 16
+}
 func TestNum22(t *testing.T)  {
 	//fmt.Println(AddString([]string{"1", "11"}, "(", []string{"2", "22"}))
 	fmt.Println(generateParenthesis(3))
