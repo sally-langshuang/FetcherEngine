@@ -93,12 +93,11 @@ func getOneValString(t *TreeNode, elemWidth int) (graph Graph) {
 	return Graph{graph:[]string{line}, offSet: o}
 }
 
-func expandGraph(offset int, graph Graph, left, right, up, down int) (o int, g Graph) {
+func expandGraph(offset int, graph Graph, left, right, up, down int) (g Graph) {
 	if left < 0 || right < 0 || up < 0 || down < 0 || graph.graph == nil ||  len(graph.graph) == 0 {
 		panic("err")
 	}
-	o = offset + left
-	g = Graph{graph: make([]string, len(graph.graph) + up + down)}
+	g = Graph{graph: make([]string, len(graph.graph) + up + down), offSet: offset + left}
 	blandLine := strings.Repeat(" ", left + graph.Width() + right)
 	for i := 0; i < up; i++ {
 		g.graph[i] = blandLine
@@ -109,7 +108,7 @@ func expandGraph(offset int, graph Graph, left, right, up, down int) (o int, g G
 	for i := up + graph.Height(); i < up + graph.Height() + down ; i++ {
 		g.graph[i] = blandLine
 	}
-	return o, g
+	return g
 }
 
 func mergeTwoGraph(lg Graph, rg Graph, gap int) (lOffset, rOffset int, graph Graph) {
@@ -120,9 +119,9 @@ func mergeTwoGraph(lg Graph, rg Graph, gap int) (lOffset, rOffset int, graph Gra
 	lOffset = lg.offSet
 	graph = Graph{graph: make([]string, 0)}
 	if lg.Height() < rg.Height() {
-		_, lg = expandGraph(lg.offSet, lg, 0, 0, 0, rg.Height() - lg.Height())
+		lg = expandGraph(lg.offSet, lg, 0, 0, 0, rg.Height() - lg.Height())
 	} else if lg.Height() > rg.Height() {
-		_, rg = expandGraph(rg.offSet, rg, 0, 0, 0, lg.Height() - rg.Height())
+		rg = expandGraph(rg.offSet, rg, 0, 0, 0, lg.Height() - rg.Height())
 	}
 	for i:=0; i < lg.Height(); i++{
 		graph.graph = append(graph.graph, lg.graph[i] + strings.Repeat(" ", gap) + rg.graph[i])
@@ -164,7 +163,7 @@ func getGraphLink(t *TreeNode, elemWidth int) (graph Graph) {
 	if t.Right == nil {
 		rootLine := layElem(lg.offSet + 2, lg.Width() + 2, elemWidth, t.Val)
 		linkline := genLinkLine(lg.offSet, lg.offSet + 2, -1, lg.Width() + 2)
-		_, lg = expandGraph(lg.offSet, lg, 0, 2, 0, 0)
+		lg = expandGraph(lg.offSet, lg, 0, 2, 0, 0)
 		g := Graph{graph: make([]string, 0), offSet: lg.offSet + 2}
 		g.RPush(rootLine, linkline)
 		g.RPush(lg.graph...)
@@ -173,7 +172,7 @@ func getGraphLink(t *TreeNode, elemWidth int) (graph Graph) {
 	if t.Left == nil {
 		rootLine := layElem(0, rg.Width() + 2, elemWidth, t.Val)
 		linkline := genLinkLine(-1, 0, rg.offSet + 2, rg.Width() + 2)
-		_, rg = expandGraph(rg.offSet, rg, 2, 0, 0, 0)
+		rg = expandGraph(rg.offSet, rg, 2, 0, 0, 0)
 		g := Graph{graph: make([]string, 0), offSet: 0}
 		g.RPush(rootLine, linkline)
 		g.RPush(rg.graph...)

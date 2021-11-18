@@ -5,6 +5,15 @@ import (
 	"testing"
 )
 
+func TestNum15(t *testing.T)  {
+	//输入：nums = [-1,0,1,2,-1,-4]
+	//输出：[[-1,-1,2],[-1,0,1]]
+	fmt.Println(threeSum([]int{0,1, 2,-1, -1,-4}))
+	fmt.Println(Sort([]int{0,1, 2,-1, -1,-4}))
+}
+func TestNum14(t *testing.T)  {
+	fmt.Println(longestCommonPrefix([]string{"flabbbb", "flakdfjkd"}))
+}
 func TestNum318(t *testing.T)  {
 	fmt.Println(maxProduct([]string{"abcw","baz","foo","bar","xtfn","abcdef"}) )// 16
 }

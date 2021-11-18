@@ -26,6 +26,17 @@ func TestNum654(t *testing.T) {
 	tr.Print()
 
 }
+func TestBalance(t *testing.T) {
+	start := 0
+	length := 19
+	arr := make([]int, 0)
+	for i := 0; i < length; i ++ {
+		arr = append(arr, start + i)
+		tree := InsertNodesAndBalance(arr...)
+		tree.Print()
+	}
+
+}
 func TestNum5(t *testing.T) {
 	fmt.Println(Palindrome{center: 3, armLen: 4}.S(produceS("abc")))
    //fmt.Println(longestPalindrome("babad"))
