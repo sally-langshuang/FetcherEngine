@@ -2,10 +2,28 @@ package tree
 
 import (
 	"fmt"
+	"math/rand"
 	"reflect"
 	"testing"
+	"time"
 )
 
+func TestNum652(t *testing.T)  {
+	tree := InitTree("[1,2,3,4,null,2,4,null,null,4]")
+	//+---------+
+	//|    1    |
+	//|  ┌─┴──┐ |
+	//|  2    3 |
+	//|┌─┘   ┌┴┐|
+	//|4     2 4|
+	//|    ┌─┘  |
+	//|    4    |
+	//+---------+
+	//[[2,4],[4]]
+	findDuplicateSubtrees(tree)
+	findDuplicateSubtrees(InitTree("[2,1,1]"))
+	tree.Print()
+}
 func TestNum106(t *testing.T)  {
 	//中序遍历 inorder = [9,3,15,20,7]
 	//后序遍历 postorder = [9,15,7,20,3]
@@ -27,14 +45,14 @@ func TestNum654(t *testing.T) {
 
 }
 func TestBalance(t *testing.T) {
-	start := 0
-	length := 19
+	rand.Seed(time.Now().UnixNano())
+	length := rand.Intn(60)
 	arr := make([]int, 0)
 	for i := 0; i < length; i ++ {
-		arr = append(arr, start + i)
-		tree := InsertNodesAndBalance(arr...)
-		tree.Print()
+		arr = append(arr, rand.Intn(100))
+
 	}
+	InsertNodesAndBalance(arr...).Print()
 
 }
 func TestNum5(t *testing.T) {

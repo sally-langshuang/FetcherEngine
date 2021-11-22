@@ -5,10 +5,14 @@ import (
 	"testing"
 )
 
+func TestNum16(t *testing.T)  {
+	fmt.Println(threeSumClosest([]int{1,1,-1,-1,3}, -1))
+}
 func TestNum15(t *testing.T)  {
-	//输入：nums = [-1,0,1,2,-1,-4]
+	//输入：nums = [-1,0,1,-1,2,-1, -1,-4]
 	//输出：[[-1,-1,2],[-1,0,1]]
 	fmt.Println(threeSum([]int{0,1, 2,-1, -1,-4}))
+	fmt.Println(threeSum([]int{0,0,0,0}))
 	fmt.Println(Sort([]int{0,1, 2,-1, -1,-4}))
 }
 func TestNum14(t *testing.T)  {
