@@ -1,10 +1,27 @@
 package tree
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestPreorder(t *testing.T)  {
-	var s TreeSerialize
-	s = pre
-	tree := s.Deserialize("[1,2,#,4,#,#,3,#,#]")
-	tree.Print()
+	datas := []struct{
+		svc TreeSerialize
+		str string
+	}{
+		{pre, "1,2,#,4,#,#,3,#,#"},
+		{post, "#,#,#,4,2,#,#,3,1"},
+	}
+	for _, x := range datas {
+		svc := x.svc
+		tree := svc.Deserialize(x.str)
+		tree.Print()
+		s := svc.Serialize(tree)
+		if  s != x.str {
+			t.Errorf("%s != %s", s, x.str)
+		}
+
+		fmt.Println(svc.Serialize(tree))
+	}
 }
