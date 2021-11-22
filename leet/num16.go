@@ -2,6 +2,7 @@ package leet
 
 import (
 	"math"
+	"sort"
 )
 
 //输入：nums = [-1,2,1,-4], target = 1
@@ -9,31 +10,32 @@ import (
 //解释：与 target 最接近的和是 2 (-1 + 2 + 1 = 2) 。
 //1,1,-1,-1,3  -1
 func threeSumClosest(nums []int, target int) int {
-	n := len(nums)
-	ans := nums[0]+nums[1] + nums[2]
-	for first := 0; first < n -2; first++ {
-		if first > 0 && nums[first] == nums[first - 1] {
+	sort.Ints(nums)
+	closest := nums[0] + nums[1] + nums[2]
+	for i := 0; i < len(nums) - 2; i++ {
+		if i > 0 && nums[i-1] == nums[i] {
 			continue
 		}
-		for second, third := first + 1, n - 1; second < third; {
-			if second > first + 1 && nums[second] == nums[second - 1] {
-				second++
+		for j, k := i + 1, len(nums) - 1; j < k; {
+			if j > i + 1 && nums[j - 1] == nums[j] {
+				j++
 				continue
 			}
-			if third < n - 1 && nums[third] == nums[third + 1] {
-				third--
+			if k < len(nums) - 1 && nums[k] == nums[k + 1] {
+				k--
 				continue
 			}
-			a:= nums[first] + nums[second] + nums[third]
-			if math.Abs(float64(a - target)) < math.Abs(float64(ans - target)) {
-				ans = a
+			x := nums[i] + nums[j] + nums[k]
+			if math.Abs(float64(x - target)) < math.Abs(float64(closest - target)) {
+				closest = x
 			}
-			if a - target > 0 {
-				third--
+			if x - target > 0 {
+				k--
 			} else {
-				second++
+				j++
 			}
+
 		}
 	}
-	return ans
+	return closest
 }

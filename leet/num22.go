@@ -64,7 +64,7 @@ func generateParenthesis2(n int) []string {
 	return ans
 }
 
-func generateParenthesis(n int) []string {
+func generateParenthesis3(n int) []string {
 	if n <= 0 {
 		return []string{}
 	}
@@ -85,4 +85,28 @@ func generateParenthesis(n int) []string {
 	}
 	return f[0][n%2]
 
+}
+
+func generateParenthesisf(i, l, r int, s []uint8, ans *[]string) {
+	if i == len(s) {
+		if l == r {
+			*ans = append(*ans, string(s))
+		}
+	} else {
+		s[i] = '('
+		if l + 1 >= r  && l + 1 <= len(s) / 2 {
+			generateParenthesisf(i + 1, l+1, r, s, ans)
+		}
+		s[i] = ')'
+		if l >= r + 1 {
+			generateParenthesisf(i + 1, l, r+ 1, s, ans)
+		}
+
+	}
+}
+func generateParenthesis(n int) []string {
+	s := make([]uint8, 2*n)
+	ans := make([]string, 0)
+	generateParenthesisf(0,0, 0, s, &ans)
+	return ans
 }
