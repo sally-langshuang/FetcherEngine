@@ -11,6 +11,7 @@ const (
 	Sep                             = ","
 	pre  PreOrderTraverseSerialize  = iota
 	post PostOrderTraverseSerialize = iota
+	level LevelTraverseSerialize = iota
 )
 
 func sepString(data string) []*TreeNode {
@@ -117,6 +118,55 @@ func (s PostOrderTraverseSerialize) Serialize(root *TreeNode) string {
 	str := b.String()
 	if len(str) > 0 {
 		str = str[:len(str)-1]
+	}
+	return str
+}
+
+type LevelTraverseSerialize int
+
+
+func (s LevelTraverseSerialize) Deserialize(data string) *TreeNode{
+	nodes := sepString(data)
+	if len(nodes) == 0 {
+		return nil
+	}
+	root := nodes[0]
+	for i, j:= 0, 1; j < len(nodes); i++{
+		if nodes[i] == nil {
+			continue
+		} else {
+			nodes[i].Left = nodes[j]
+			j++
+			if j == len(nodes) {
+				break
+			}
+			nodes[i].Right = nodes[j]
+			j++
+		}
+	}
+	return root
+
+}
+//func (s LevelTraverseSerialize)
+func (s LevelTraverseSerialize) Serialize(root *TreeNode) string{
+	b := strings.Builder{}
+	queue := []*TreeNode{root}
+	for len(queue) > 0 {
+		r := queue[0]
+		queue = queue[1:]
+		if r == nil {
+			fmt.Fprintf(&b, Null)
+			fmt.Fprintf(&b, Sep)
+			continue
+		}
+		fmt.Fprintf(&b, strconv.Itoa(r.Val))
+		fmt.Fprintf(&b, Sep)
+		queue = append(queue, r.Left)
+		queue = append(queue, r.Right)
+	}
+	str := b.String()
+	if len(str) > 0 {
+		str = str[:len(str) - 1]
 	}
 	return str
 }

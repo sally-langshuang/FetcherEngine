@@ -12,6 +12,7 @@ func TestPreorder(t *testing.T)  {
 	}{
 		{pre, "1,2,#,4,#,#,3,#,#"},
 		{post, "#,#,#,4,2,#,#,3,1"},
+		{level, "1,2,3,#,4,#,#,#,#"},
 	}
 	for _, x := range datas {
 		svc := x.svc
