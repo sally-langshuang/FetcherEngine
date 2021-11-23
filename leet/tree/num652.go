@@ -1,5 +1,10 @@
 package tree
 
+import (
+	"fmt"
+	"strconv"
+)
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -8,88 +13,51 @@ package tree
  *     Right *TreeNode
  * }
  */
-//[1,2,3,4,null,2,4,null,null,4]  [[2,4],[4]]
-func isSame(a, b *TreeNode) bool{
-	if a == nil && b == nil {
-		return true
-	} else if a == nil || b == nil {
-		return false
-	}
-	return a.Val == b.Val && isSame(a.Left, b.Left) && isSame(a.Right, b.Right)
-}
-func inArr(t *TreeNode, ans []*TreeNode) bool {
-	for x := range ans {
-		if isSame(t, ans[x]) {
-			return true
-		}
-	}
-	return false
-}
-func f(last []*TreeNode, ans *[]*TreeNode) ([]*TreeNode){
-	bord := len(last)
-	for x := range last {
-		if last[x] != nil{
-			if last[x].Left != nil && !inArr(last[x].Left, *ans) {
-				last = append(last, last[x].Left)
-			}
-			if last[x].Right != nil && !inArr(last[x].Right, *ans){
-				last = append(last, last[x].Right)
-			}
-		}
-	}
-	for x := 0; x < len(last) - 1; x++ {
-		for y :=  x + 1; y < len(last); y++{
-			if isSame(last[x], last[y]) && !inArr(last[x], *ans) {
-				*ans = append(*ans, last[x])
-			}
-		}
-	}
-	return last[bord:]
-}
-func findDuplicateSubtrees(root *TreeNode) (ans []*TreeNode) {
-	ans = make([]*TreeNode, 0)
-	for cur:= []*TreeNode{root}; len(cur) > 0; cur= f(cur, &ans){
-	}
-	return
-}
-func equal(tree1, tree2 *TreeNode) (res bool) {
-	if tree1 == nil && tree2 == nil {
-		return true
-	}
-	if tree1.Val != tree2.Val {
-		return false
-	}
-	return equal(tree1.Left, tree2.Left) && equal(tree1.Right, tree2.Right)
-}
-
-func in(tree *TreeNode, arr []*TreeNode) bool {
-	if tree == nil || len(arr) == 0 {
-		return false
-	}
-	for _, i := range arr {
-		if equal(i, tree) {
-			return true
-		}
-	}
-	return false
-}
-
-func findDuplicateSubtrees0(root *TreeNode) (res []*TreeNode) {
-	res = make([]*TreeNode, 0)
+func f652(allOccur *map[string]int, ans *[]*TreeNode, root *TreeNode) string {
 	if root == nil {
-		return
+		return "#,"
 	}
-	leftRes := findDuplicateSubtrees(root.Left)
-	for _, i:= range leftRes{
-		if !in(i, res) {
-			res = append(res, i)
+	rootStr := strconv.Itoa(root.Val) + "," + f652(allOccur, ans, root.Left) + f652(allOccur, ans, root.Right)
+	if x := (*allOccur)[rootStr]; x <= 1 {
+		(*allOccur)[rootStr] += 1
+		if x == 1 {
+			(*ans) = append(*ans, root)
 		}
 	}
-	rightRes := findDuplicateSubtrees(root.Right)
-	for _, i:= range rightRes{
-		if !in(i, res) {
-			res = append(res, i)
-		}
+	return rootStr
+}
+
+func findDuplicateSubtrees0(root *TreeNode) []*TreeNode {
+	allOccur := make(map[string]int, 0)
+	ans := make([]*TreeNode, 0)
+	f652(&allOccur, &ans, root)
+	return ans
+}
+
+
+func ff652(uids *map[string]string, counts *map[string]int, ans *[]*TreeNode, root *TreeNode, t *int) string{
+	if root == nil {
+		return "#"
 	}
-	return res
+	str := fmt.Sprintf("%s,%s,%s",ff652(uids, counts, ans, root.Left, t), strconv.Itoa(root.Val), ff652(uids, counts, ans, root.Right, t))
+	if _, ok := (*uids)[str]; !ok {
+		(*uids)[str] = strconv.Itoa(*t)
+		*t += 1
+	}
+	uid := (*uids)[str]
+	c := (*counts)[uid]
+	(*counts)[uid] = c + 1
+	if (*counts)[uid] == 2 {
+		*ans = append(*ans, root)
+	}
+	return uid
+}
+
+func findDuplicateSubtrees(root *TreeNode) []*TreeNode {
+	t := 0
+	uids := make(map[string]string, 0)
+	counts := make(map[string]int, 0)
+	ans := make([]*TreeNode, 0)
+	ff652(&uids, &counts, &ans, root, &t)
+	return ans
 }
