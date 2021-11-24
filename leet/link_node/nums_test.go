@@ -5,6 +5,9 @@ import (
 	"testing"
 )
 
+func TestNum24(t *testing.T)  {
+ fmt.Println(swapKPairs(initListNode([]int{1, 2, 3, 4}), 4)) //[4,3,2,1]
+}
 func TestNum23(t *testing.T)  {
 	//[[-8,-7,-7,-5,1,1,3,4],[-2],[-10,-10,-7,0,1,3],[2]]
 	l := initListNode([]int{-8,-7})
