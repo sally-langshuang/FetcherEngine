@@ -9,7 +9,8 @@ import (
 )
 
 func TestNum652(t *testing.T)  {
-	tree := InitTree("[1,2,3,4,null,2,4,null,null,4]")
+	//tree := InitTree("[1,2,3,4,null,2,4,null,null,4]")
+	tree := InitTree("[0,0,0,0,null,null,0,null,null,null,0]")
 	//+---------+
 	//|    1    |
 	//|  ┌─┴──┐ |
@@ -20,9 +21,12 @@ func TestNum652(t *testing.T)  {
 	//|    4    |
 	//+---------+
 	//[[2,4],[4]]
-	findDuplicateSubtrees(tree)
-	findDuplicateSubtrees(InitTree("[2,1,1]"))
+
+	//findDuplicateSubtrees(InitTree("[2,1,1]"))
 	tree.Print()
+	for _, x := range findDuplicateSubtrees(tree) {
+		x.Print()
+	}
 }
 func TestNum106(t *testing.T)  {
 	//中序遍历 inorder = [9,3,15,20,7]
