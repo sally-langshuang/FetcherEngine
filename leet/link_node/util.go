@@ -53,13 +53,13 @@ func changeTwoChild(lh, rh *ListNode)  {
 	}
 	l, lt, r, rt := lh.Next, lh.Next.Next, rh.Next, rh.Next.Next
 	lh.Next = r
-	if lt != r {
-		r.Next = lt
-	}
+	l.Next = rt
 	if rh != l {
 		rh.Next = l
-	} else {
+	}
+	if lt != r {
+		r.Next = lt
+	}else {
 		r.Next = l
 	}
-	l.Next = rt
 }
