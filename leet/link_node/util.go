@@ -46,3 +46,20 @@ func initListNode(nums []int)  (res *ListNode){
 	}
 	return head.Next
 }
+
+func changeTwoChild(lh, rh *ListNode)  {
+	if lh == nil || lh.Next == nil || lh.Next.Next == nil || rh == nil || rh.Next==nil || lh.Next == rh.Next{
+		return
+	}
+	l, lt, r, rt := lh.Next, lh.Next.Next, rh.Next, rh.Next.Next
+	lh.Next = r
+	if lt != r {
+		r.Next = lt
+	}
+	if rh != l {
+		rh.Next = l
+	} else {
+		r.Next = l
+	}
+	l.Next = rt
+}
