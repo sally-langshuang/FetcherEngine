@@ -5,9 +5,27 @@ import (
 	"testing"
 )
 
+func TestNum29(t *testing.T)  {
+	fmt.Println(divide(-2147483648, -1))
+	fmt.Println(divide(-10, 3))
+}
+func TestNum28(t *testing.T) {
+	fmt.Println(strStr("mississippi", "issip"))//issip
+	fmt.Println("abc"[1:2])
+}
+
+func TestNum27(t *testing.T) {
+	fmt.Println(removeElement([]int{3,2,2,3}, 3))
+}
+
+func TestNum26(t *testing.T) {
+	fmt.Println(removeDuplicates([]int{1, 1, 2}))
+}
+
 func TestNum16(t *testing.T)  {
 	fmt.Println(threeSumClosest([]int{1,1,-1,-1,3}, -1))
 }
+
 func TestNum15(t *testing.T)  {
 	//输入：nums = [-1,0,1,-1,2,-1, -1,-4]
 	//输出：[[-1,-1,2],[-1,0,1]]

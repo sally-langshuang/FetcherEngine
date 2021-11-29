@@ -1,5 +1,7 @@
 package link_node
 
+import "fmt"
+
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
@@ -8,7 +10,7 @@ package link_node
  * }
  */
 func swapPairs(head *ListNode) *ListNode {
-	return swapKPairs(head, 2)
+	return reverseKGroup(head, 2)
 }
 
 func swapTwo(hp, tp *ListNode)  *ListNode{
@@ -29,27 +31,38 @@ func swapTwo(hp, tp *ListNode)  *ListNode{
 	}
 	return h
 }
-func swapKPairs(head *ListNode, k int) *ListNode {
+
+func reverseKGroup(head *ListNode, k int) *ListNode {
 	if k == 1 {
 		return head
 	}
 	sentinel := &ListNode{Next: head}
-	for hp := sentinel; hp.Next != nil; {
-		i := 0
-		tp := hp
+	for p := sentinel; p != nil;{
+		arrP := make([]*ListNode, k)
 
-		for ; i < k- 1 && tp.Next != nil; i++ {
-			tp = tp.Next
+		i:=0
+		for ; i < k && p.Next != nil;  {
+			arrP[i] = p
+			i++
+			p = p.Next
 		}
-		if i < k- 1 || tp.Next == nil {
+		if i != k {
 			break
 		}
 
-		hp = swapTwo(hp, tp)
+		for j, iVal := k - 1, arrP[0]; j >= (k+1) / 2; j--{
+			changeTwoChild(iVal, arrP[j])
+			fmt.Println(sentinel)
+			if j == k - 1 {
+				if k == 2 {
+					p = arrP[j]
+				} else {
+					p = arrP[j].Next
+				}
+
+			}
+			iVal = iVal.Next
+		}
 	}
 	return sentinel.Next
-}
-
-func reverseKGroup(head *ListNode, k int) *ListNode {
-	return swapKPairs(head, k)
 }
