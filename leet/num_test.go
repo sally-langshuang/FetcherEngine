@@ -5,6 +5,22 @@ import (
 	"testing"
 )
 
+func TestNum33(t *testing.T)  {
+	//[4,5,6,7,0,1,2]
+	//0
+	datas := []struct {
+		nums   []int
+		target int
+		ans int
+	} {
+		{[]int{4,5,6,7,0,1,2}, 0, 4},
+		{[]int{1}, 0, -1},
+		{[]int{3,5,1}, 1, 2},
+	}
+	for _, tt :=range datas {
+		fmt.Println(search(tt.nums,tt.target) == tt.ans)
+	}
+}
 func TestNum32(t *testing.T)  {
    //fmt.Println(longestValidParentheses(")("))
    //fmt.Println(longestValidParentheses("())())(()"))
