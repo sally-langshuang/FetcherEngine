@@ -11,8 +11,8 @@ func TestNum32(t *testing.T)  {
    //fmt.Println(longestValidParentheses("()(()"))
    //fmt.Println(longestValidParentheses("(())(()"))
    //fmt.Println(longestValidParentheses("(())(()"))
-   //fmt.Println(longestValidParentheses(")()())"))//4
-   //fmt.Println(longestValidParentheses("(())((()))"))//6
+   fmt.Println(longestValidParentheses(")(()())"))//6
+   fmt.Println(longestValidParentheses("(())((()))"))//10
    fmt.Println(longestValidParentheses(")()())"))//4
 }
 //[1,3,2]

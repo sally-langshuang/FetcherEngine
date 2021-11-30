@@ -4,6 +4,8 @@ github.com/RoaringBitmap/roaring v0.9.4/go.mod h1:icnadbWcNyfEHlYdr+tDlOTih1Bf/h
 github.com/agiledragon/gomonkey v2.1.0+incompatible h1:nJqlYJQVvwGVLfatMCxiCOdofguXNMvgjM7A48gTERc=
 github.com/agiledragon/gomonkey v2.1.0+incompatible/go.mod h1:2NGfXu1a80LLr2cmWXGBDaHEjb1idR6+FVlX5T3D9hw=
 github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6/go.mod h1:grANhF5doyWs3UAsr3K4I6qtAmlQcZDesFNEHPZAzj8=
+github.com/badgerodon/collections v0.0.0-20130729185459-604e922904d3 h1:ooC26VNhy3ronBnebGlYPPMJOdYnp+ePnbOrgSddoPQ=
+github.com/badgerodon/collections v0.0.0-20130729185459-604e922904d3/go.mod h1:9iqE3TMnuFhHQI3OoJXBDOKj4bDZAuujavGYkpS3CI0=
 github.com/bits-and-blooms/bitset v1.2.0 h1:Kn4yilvwNtMACtf1eYDlG8H77R07mZSPbMjLyS07ChA=
 github.com/bits-and-blooms/bitset v1.2.0/go.mod h1:gIdJ4wp64HaoK2YrL1Q5/N7Y16edYb8uY+O0FJTyyDA=
 github.com/blevesearch/bleve/v2 v2.2.2 h1:kBLSCEcAs7VvH4S/JkpYwR4Jnpuv/3FNl6LWg6fqCmY=
@@ -48,6 +50,8 @@ github.com/elastic/go-elasticsearch/v7 v7.15.1/go.mod h1:OJ4wdbtDNk5g503kvlHLyEr
 github.com/elastic/go-elasticsearch/v8 v8.0.0-20210608143047-aa1301e7ba9d h1:id0CyeIuvJ9hzYhLlKsXHQ10d/k4G+CexAu53Pl3hf4=
 github.com/elastic/go-elasticsearch/v8 v8.0.0-20210608143047-aa1301e7ba9d/go.mod h1:xe9a/L2aeOgFKKgrO3ibQTnMdpAeL0GC+5/HpGScSa4=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
+github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3 h1:zN2lZNZRflqFyxVaTIU61KNKQ9C0055u9CAfpmqUvo4=
+github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3/go.mod h1:nPpo7qLxd6XL3hWJG/O60sR8ZKfMCiIoNap5GvD12KU=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/golang/protobuf v1.3.2 h1:6nsPYzhq5kReh6QImI3k5qWzO4PEbvbIW2cwSfR/6xs=
 github.com/golang/protobuf v1.3.2/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=

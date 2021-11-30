@@ -1,5 +1,7 @@
 package leet
-
+import (
+	. "github.com/golang-collections/collections/stack"
+)
 type stack struct {
 	Arr []int
 	Tail int
@@ -69,10 +71,11 @@ func longestValidParentheses0(s string) int {
 	return max
 }
 
-func longestValidParentheses(s string) int {
+func longestValidParentheses3(s string) int {
 	arr := make([]int, len(s))
 	max := 0
 	for i := 1; i < len(arr); i++ {
+		//s[i - arr[i - 1] - 1] 为 （ 需要匹配的字符，如果是）才会连续+2， 如果arr[i - arr[i]]不为零，需要追加上
 		if  s[i] == '(' || i - arr[i - 1] - 1 < 0 || s[i - arr[i - 1] - 1] != '(' {
 			continue
 		}
@@ -86,4 +89,64 @@ func longestValidParentheses(s string) int {
 
 	}
 	return max
+}
+
+func longestValidParentheses4(s string) int {
+	st := New()
+	st.Push(-1)
+	maxL, l := 0, 0
+	for i:= range s {
+		if s[i] == '(' {
+			st.Push(i)
+			continue
+		}
+		// )  )
+		peer := st.Pop().(int)
+		if peer == -1 || s[peer] == ')' {
+			st.Push(i)
+			continue
+		}
+		// )  (
+		l = i - st.Peek().(int)
+		if l > maxL {
+			maxL = l
+		}
+	}
+	return maxL
+}
+//best
+func longestValidParentheses(s string) int {
+	left, right,  maxL := 0, 0, 0
+	for i := range s {
+		if s[i] == '(' {
+			left++
+		} else {
+			right++
+		}
+		if left == right {
+			if left + right > maxL {
+				maxL = left + right
+			}
+		} else if right > left {
+			left = 0
+			right = 0
+		}
+	}
+	left, right = 0, 0
+	for i := range s {
+		if s[len(s) - 1 - i] == '(' {
+			left++
+		} else {
+			right++
+		}
+		if left == right {
+			if left + right > maxL {
+				maxL = left + right
+			}
+		} else if right < left {
+			left = 0
+			right = 0
+		}
+	}
+	return maxL
 }
