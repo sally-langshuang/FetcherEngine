@@ -2,9 +2,40 @@ package leet
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
+//输入：n = 3
+//输出：3
+//示例 2：
+//
+//输入：n = 11
+//输出：0
+//解释：第 11 位数字在序列 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ... 里是 0 ，它是 10 的一部分。
 
+func TestNum400(t *testing.T)  {
+	datas := []struct{
+		n, ans int
+	}{
+		{3, 3},
+		{11, 0},
+	}
+	for _, x:= range datas {
+		fmt.Println(reflect.DeepEqual(findNthDigit(x.n),x.ans))
+	}
+}
+func TestNum34(t *testing.T)  {
+	datas := []struct{
+		nums, ans []int
+		target int
+	}{
+		{[]int{5,7,7,8,8,10}, []int{3, 4}, 8},
+		{[]int{5,7,7,8,8,10}, []int{-1,-1}, 6},
+	}
+	for _, x:= range datas {
+	   fmt.Println(reflect.DeepEqual(searchRange(x.nums, x.target),x.ans))
+	}
+}
 func TestNum33(t *testing.T)  {
 	//[4,5,6,7,0,1,2]
 	//0

@@ -54,9 +54,3 @@ func getKthElement(nums1 , nums2 []int, k int) int {
 	}
 	panic("not expected")
 }
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
