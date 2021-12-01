@@ -19,6 +19,8 @@ func TestNum400(t *testing.T)  {
 	}{
 		{3, 3},
 		{11, 0},
+		{13, 1},
+		{1000, 3},
 	}
 	for _, x:= range datas {
 		fmt.Println(reflect.DeepEqual(findNthDigit(x.n),x.ans))
