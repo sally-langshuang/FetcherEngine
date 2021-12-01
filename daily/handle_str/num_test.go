@@ -11,6 +11,8 @@ func TestNum1446(t *testing.T)  {
 		s string
 		ans int
 	}{
+		{"j", 1},
+		{"cc", 2},
 		{"tourist", 1},
 		{"hooraaaaaaaaaaay", 11},
 		{"triplepillooooow", 5},
