@@ -6,6 +6,14 @@ import (
 	"testing"
 )
 
+func TestA(t *testing.T)  {
+	fmt.Println(4%2)
+	fmt.Println(onlyOne(0b10))
+	fmt.Println(onlyOne(0b1000))
+	fmt.Println(onlyOne(0b0))
+	fmt.Println(onlyOne(0b1000000001000001))
+}
+
 func TestNum37(t *testing.T)  {
 	datas := []struct{
 		board, ans [][]byte
