@@ -23,7 +23,7 @@ func onlyOne(x int) int {
 func findRoot(board [][]byte, f [3][9]int) (int, int, byte) {
 	for i := range board {
 		for j := range board[i] {
-			fmt.Println("i=",i,"j=",j)
+			//fmt.Println("i=",i,"j=",j)
 			if val := board[i][j] - '0'; val > 9 || val < 1 {
 				m := f[0][i] ^ f[1][j] ^ f[2][i/3*3+j/3]
 				if i == 8 && j == 6{
