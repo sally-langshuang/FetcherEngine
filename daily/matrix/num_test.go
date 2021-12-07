@@ -6,31 +6,26 @@ import (
 	"testing"
 )
 
-func TestA(t *testing.T)  {
+func TestA(t *testing.T) {
 	fmt.Println(!true || false)
 	fmt.Println(!false && true)
-	fmt.Println(4%2)
-	fmt.Println(onlyOne(0b10))
-	fmt.Println(onlyOne(0b1000))
-	fmt.Println(onlyOne(0b0))
-	fmt.Println(onlyOne(0b1000000001000001))
+	fmt.Println(4 % 2)
 }
 
 func TestNum1034(t *testing.T) {
 	datas := []struct {
-		grid, ans [][]int
+		grid, ans       [][]int
 		row, col, color int
 	}{
-		{[][ ]int{{1, 1, 1}, {1, 1, 1}, {1, 1, 1}}, [][]int{{2, 2, 2}, {2, 1, 2}, {2, 2, 2}}, 1, 1, 2},
-		{[][]int{{1,2,1,2,1,2},{2,2,2,2,1,2},{1,2,2,2,1,2}}, [][]int{{1,1,1,1,1,2},{1,2,1,1,1,2},{1,1,1,1,1,2}}, 1, 3, 1},
+		{[][]int{{1, 1, 1}, {1, 1, 1}, {1, 1, 1}}, [][]int{{2, 2, 2}, {2, 1, 2}, {2, 2, 2}}, 1, 1, 2},
+		{[][]int{{1, 2, 1, 2, 1, 2}, {2, 2, 2, 2, 1, 2}, {1, 2, 2, 2, 1, 2}}, [][]int{{1, 1, 1, 1, 1, 2}, {1, 2, 1, 1, 1, 2}, {1, 1, 1, 1, 1, 2}}, 1, 3, 1},
 	}
 	for _, d := range datas {
 		fmt.Println(reflect.DeepEqual(colorBorder(d.grid, d.row, d.col, d.color), d.ans))
-		//fmt.Println(d.grid)
 	}
 }
-func TestNum37(t *testing.T)  {
-	datas := []struct{
+func TestNum37(t *testing.T) {
+	datas := []struct {
 		board, ans [][]byte
 	}{
 		{
@@ -57,6 +52,30 @@ func TestNum37(t *testing.T)  {
 				{'3', '4', '5', '2', '8', '6', '1', '7', '9'},
 			},
 		},
+		{
+			board: [][]byte{
+				{'.', '.', '9', '7', '4', '8', '.', '.', '.'},
+				{'7', '.', '.', '.', '.', '.', '.', '.', '.'},
+				{'.', '2', '.', '1', '.', '9', '.', '.', '.'},
+				{'.', '.', '7', '.', '.', '.', '2', '4', '.'},
+				{'.', '6', '4', '.', '1', '.', '5', '9', '.'},
+				{'.', '9', '8', '.', '.', '.', '3', '.', '.'},
+				{'.', '.', '.', '8', '.', '3', '.', '2', '.'},
+				{'.', '.', '.', '.', '.', '.', '.', '.', '6'},
+				{'.', '.', '.', '2', '7', '5', '9', '.', '.'},
+			},
+			ans: [][]byte{
+				{'5', '1', '9', '7', '4', '8', '6', '3', '2'},
+				{'7', '8', '3', '6', '5', '2', '4', '1', '9'},
+				{'4', '2', '6', '1', '3', '9', '8', '7', '5'},
+				{'3', '5', '7', '9', '8', '6', '2', '4', '1'},
+				{'2', '6', '4', '3', '1', '7', '5', '9', '8'},
+				{'1', '9', '8', '5', '2', '4', '3', '6', '7'},
+				{'9', '7', '5', '8', '6', '3', '1', '2', '4'},
+				{'8', '3', '2', '4', '9', '1', '7', '5', '6'},
+				{'6', '4', '1', '2', '7', '5', '9', '8', '3'},
+			},
+		},
 	}
 	for _, x := range datas {
 		solveSudoku(x.board)
@@ -64,10 +83,10 @@ func TestNum37(t *testing.T)  {
 	}
 }
 
-func TestNum36(t *testing.T)  {
-	datas := []struct{
+func TestNum36(t *testing.T) {
+	datas := []struct {
 		board [][]byte
-		ans bool
+		ans   bool
 	}{
 		{
 			board: [][]byte{

@@ -30,9 +30,6 @@ func doColorBorder(grid, done [][]int, now []int, color int, same int) {
 	done[now[0]][now[1]] = 1
 
 	if nexts := nextSteps(grid, now, func(n []int) bool{
-		//fmt.Println(!isInRange(grid, n))
-		//fmt.Println(n)
-		//return !isInRange(grid, n) || (grid[now[0]][n[1]] != color && grid[n[0]][n[1]] != same)
 		return !isInRange(grid, n) || (done[n[0]][n[1]] == 0 && grid[n[0]][n[1]] != same)
 	}); len(nexts) != 0 {
 		grid[now[0]][now[1]] = color
