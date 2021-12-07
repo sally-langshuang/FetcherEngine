@@ -6,6 +6,19 @@ import (
 	"testing"
 )
 
+func TestNum42(t *testing.T)  {
+
+	datas := []struct{
+		height []int
+		ans int
+	} {
+		{height: []int{0,1,0,2,1,0,1,3,2,1,2,1}, ans: 6},
+		{height: []int{4,2,0,3,2,5}, ans: 9},
+	}
+	for _, d := range datas {
+		fmt.Println(trap(d.height) == d.ans)
+	}
+}
 
 func TestNum1005(t *testing.T)  {
 	datas := []struct{
