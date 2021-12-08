@@ -5,7 +5,6 @@ import (
 	"reflect"
 	"testing"
 )
-
 func TestNum689(t *testing.T) {
 	datas := []struct{
 		nums, ans []int
