@@ -6,18 +6,21 @@ import (
 	"testing"
 )
 
+
 func TestNum44(t *testing.T)  {
 	datas := []struct{
 		s, p string
 		ans bool
 	}{
+		{"abcabczzzde","*abc???de*", true},
+		{"zacabz","*a?b*", false},
 		{"acdcb", "a*c?b", false},
 		{"adceb", "*a*b", true},
 		{"cb", "?a", false},
 		{"aa", "*", true},
 		{"aa", "a", false},
 		{"", "*", true},
-		{"", "", true}, // ?
+		{"", "", true},
 	}
 	for _, x := range datas{
 		fmt.Println(isMatch(x.s, x.p) == x.ans)

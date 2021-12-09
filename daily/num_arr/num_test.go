@@ -5,6 +5,18 @@ import (
 	"reflect"
 	"testing"
 )
+func TestNum45(t *testing.T)  {
+	datas := []struct{
+		nums []int
+		ans int
+	}{
+		{[]int{2, 2, 3, 1, 1, 4}, 2},
+		{[]int{2, 2, 0, 1}, 2},
+	}
+	for _, x := range datas {
+		fmt.Println(jump(x.nums) == x.ans)
+	}
+}
 func TestNum689(t *testing.T) {
 	datas := []struct{
 		nums, ans []int
