@@ -5,6 +5,28 @@ import (
 	"reflect"
 	"testing"
 )
+
+
+func TestNum315(t *testing.T)  {
+	//tree := InitTree(&AVLTree{}, "[1,2,null,3,null]") //LL
+	//tree := InitTree(&AVLTree{}, "[1,null,2,null,3]") //RR
+	//tree := InitTree(&AVLTree{}, "[1,2,null,null,3]") //LR
+	//tree := InitTree(&AVLTree{}, "[1,null,2,3]") //RL
+	//tree := InitTree(&AVLTree{}, "[1,null,2,3,4,null,null,null,5]") //Balance ,null,null,5
+	//Print(tree)
+	//Print(Balance(tree.(*AVLTree)))
+	datas := []struct{
+		nums, ans []int
+	}{
+		{[]int{-1,-1}, []int{0, 0}},
+		{[]int{-1}, []int{0}},
+		{[]int{5,2,6,1}, []int{2,1,1,0}},
+		{[]int{3, 3, 3, 3, 1}, []int{1, 1,1,1, 0}},
+	}
+	for i:= range datas {
+		fmt.Println(reflect.DeepEqual(countSmaller(datas[i].nums), datas[i].ans))
+	}
+}
 func TestNum45(t *testing.T)  {
 	datas := []struct{
 		nums []int

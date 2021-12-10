@@ -11,7 +11,19 @@ func TestA(t *testing.T) {
 	fmt.Println(!false && true)
 	fmt.Println(4 % 2)
 }
+func TestNum794(t *testing.T)  {
+	datas := []struct {
+		board []string
+		ans bool
+	} {
+		{[]string{"XXX","OOX","OOX"}, true},
+		{[]string{"XXO","XOX","OXO"}, false},
+	}
+	for _, x := range datas {
+		fmt.Println(validTicTacToe(x.board) == x.ans)
+	}
 
+}
 func TestNum1034(t *testing.T) {
 	datas := []struct {
 		grid, ans       [][]int

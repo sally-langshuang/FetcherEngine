@@ -6,7 +6,22 @@ import (
 	"testing"
 )
 
-
+func TestNum748(t *testing.T)  {
+	datas := []struct{
+		licensePlate, ans string
+		words []string
+	}{
+		//{"iMSlpe4", "simple", []string{"claim","consumer","student","camera","public","never","wonder","simple","thought","use"}},
+		//{"OgEu755", "enough", []string{"enough","these","play","wide","wonder","box","arrive","money","tax","thus"}},
+		//{"Ah71752", "husband", []string{"suggest","letter","of","husband","easy","education","drug","prevent","writer","old"}},
+		//{"1s3 456", "pest", []string{"looks", "pest", "stew", "show"}},
+		//{"1s3 PSt", "steps", []string{"step", "steps", "stripe", "stepple"}},
+		{"AN87005","important", []string{"participant","individual","start","exist","above","already","easy","attack","player","important"}},
+	}
+	for _, d := range datas {
+		fmt.Println(shortestCompletingWord(d.licensePlate, d.words) == d.ans)
+	}
+}
 func TestNum44(t *testing.T)  {
 	datas := []struct{
 		s, p string
