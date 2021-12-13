@@ -3,9 +3,29 @@ package num_arr
 import (
 	"fmt"
 	"reflect"
+	"sort"
 	"testing"
 )
+func discretization(nums []int) []int{
+	set := map[int]struct{}{}
+	for _, num := range nums {
+		set[num] = struct{}{}
+	}
+	a := make([]int, 0, len(nums))
+	for num := range set {
+		a = append(a, num)
+	}
+	sort.Ints(a)
+	return a
+}
+func TestA(t *testing.T)  {
 
+	//nums := []int{5,5,2,3,6}
+	fmt.Println(1&-1)
+	fmt.Println(0b1100&-0b1100)
+	fmt.Println(0b1011&-0b1011)
+
+}
 
 func TestNum315(t *testing.T)  {
 	//tree := InitTree(&AVLTree{}, "[1,2,null,3,null]") //LL

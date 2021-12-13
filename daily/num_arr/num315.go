@@ -1,6 +1,48 @@
 package num_arr
 
+import "sort"
+//输入：nums = [5,2,6,1]
+//输出：[2,1,1,0]
 func countSmaller(nums []int) []int {
+	ns := distinct(nums)
+	count := make([]int, len(ns))
+	ans := make([]int, len(nums))
+	for i := len(nums) - 1; i >= 0 ; i-- {
+		idx := sort.SearchInts(ns, nums[i])
+		update(count, idx + 1)
+		ans[i] = sum(count, idx)
+	}
+	return ans
+}
+
+func update(counts []int, i int)  {
+	for x:=i; x <= len(counts); x += x & -x {
+		counts[x - 1]++
+	}
+}
+
+func sum(counts []int, i int) int {
+	ans := 0
+	for x:= i; x > 0; x -= x & -x {
+		ans += counts[x - 1]
+	}
+	return ans
+}
+
+func distinct(nums []int) []int {
+	m := map[int]struct{}{}
+	for _, i := range nums {
+		m[i] = struct{}{}
+	}
+	ans := make([]int, 0, len(nums))
+	for i, _ := range m {
+		ans = append(ans, i)
+	}
+	sort.Ints(ans)
+	return ans
+}
+
+func countSmaller0(nums []int) []int {
 	ans := make([]int, len(nums))
 	var tree, node *AVLTree
 	for i := len(nums) - 1; i >= 0; i-- {

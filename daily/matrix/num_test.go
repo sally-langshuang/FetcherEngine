@@ -6,6 +6,18 @@ import (
 	"testing"
 )
 
+func TestNum807(t *testing.T)  {
+	datas := []struct{
+		grid [][]int
+		ans int
+	}{
+		{[][]int{{3,0,8,4},{2,4,5,7},{9,2,6,3},{0,3,1,0}}, 35},
+	}
+	for i:= range datas {
+		fmt.Println(maxIncreaseKeepingSkyline(datas[i].grid) == datas[i].ans)
+	}
+
+}
 func TestA(t *testing.T) {
 	fmt.Println(!true || false)
 	fmt.Println(!false && true)
