@@ -41,17 +41,17 @@ func sort1(courses [][]int)  {
 	sort1(courses[i + 1:])
 	return
 }
-type arr []int
+type slice []int
 
 type MyHeap struct {
-	arr
+	slice
 }
 
 func (h *MyHeap) up(i int)  {
 	for x := i; x > 0; {
 		up := (x - 1) / 2
-		if h.arr[up] < h.arr[x] {
-			h.arr[up], h.arr[x] = h.arr[x], h.arr[up]
+		if h.slice[up] < h.slice[x] {
+			h.slice[up], h.slice[x] = h.slice[x], h.slice[up]
 		} else {
 			break
 		}
@@ -60,24 +60,24 @@ func (h *MyHeap) up(i int)  {
 }
 
 func (h *MyHeap) Push(v int)  {
-	h.arr = append(h.arr, v)
-	h.up(len(h.arr) - 1)
+	h.slice = append(h.slice, v)
+	h.up(len(h.slice) - 1)
 }
 
 func (h *MyHeap) down(i0 int) bool {
 	i := i0
 	for {
 		j := i * 2 + 1
-		if j >= len(h.arr) {
+		if j >= len(h.slice) {
 			break
 		}
-		if j2 := j + 1; j2 < len(h.arr) && h.arr[j2] > h.arr[j] {
+		if j2 := j + 1; j2 < len(h.slice) && h.slice[j2] > h.slice[j] {
 			j = j2
 		}
-		if h.arr[j] <= h.arr[i] {
+		if h.slice[j] <= h.slice[i] {
 			break
 		}
-		h.arr[j], h.arr[i] = h.arr[i], h.arr[j]
+		h.slice[j], h.slice[i] = h.slice[i], h.slice[j]
 		i = j
 	}
 	return i > i0
@@ -92,21 +92,21 @@ func (h *MyHeap) Fix(i int)  {
 func scheduleCourse0(courses [][]int) int {
 	sort1(courses)
 	var offset, maxCount int
-	h := MyHeap{arr{}}
+	h := MyHeap{slice{}}
 	for i := range courses {
 		if courses[i][0] + offset <= courses[i][1] {
 			offset += courses[i][0]
 			h.Push(courses[i][0])
 			maxCount++
-		} else if len(h.arr) > 0 {
-			if h.arr[0] > courses[i][0] {
-				offset += - h.arr[0] + courses[i][0]
-				h.arr[0] = courses[i][0]
+		} else if len(h.slice) > 0 {
+			if h.slice[0] > courses[i][0] {
+				offset += - h.slice[0] + courses[i][0]
+				h.slice[0] = courses[i][0]
 				h.Fix(0)
 			}
 		}
 	}
-	return len(h.arr)
+	return len(h.slice)
 }
 
 func scheduleCourse(courses [][]int) int {

@@ -5,7 +5,32 @@ import (
 	"sync/atomic"
 	"testing"
 )
+type Sortx interface {
+	Len() int
+	Swap(int, int)
+}
+type mother struct {
+	id int
+}
 
+func (m mother) Len() int {
+	return 2
+}
+
+type child struct {
+	mother
+}
+//func (c child) Len() int {
+//	 return 100
+//}
+func (c child) Len2() int {
+	 return 1002
+}
+
+func TestC(t *testing.T)  {
+	var c child = child{mother: mother{2}}
+	fmt.Println(c.Len())
+}
 func TestA(t *testing.T)  {
 	// Declaring u
 	var u uint32
