@@ -6,6 +6,9 @@ import (
 )
 
 func TestNum1494(t *testing.T)  {
+	var nexts []int
+	nexts = append(nexts, 2)
+	fmt.Println(nexts)
 	datas := []struct{
 		dependencies [][]int
 		n, k, ans int
