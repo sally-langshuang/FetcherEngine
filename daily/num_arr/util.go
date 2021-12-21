@@ -8,26 +8,26 @@ import (
 	"unicode"
 )
 
-
 type TreeNode interface {
 	Constructor(int) interface{}
-	GetVal()int
+	GetVal() int
 	GetLeft() interface{}
 	SetLeft(interface{})
 	GetRight() interface{}
 	SetRight(interface{})
 }
 
-func String(tree TreeNode) string{
-	g :=getGraphLink(tree,len(strconv.Itoa(MaxVal(tree))))
+func String(tree TreeNode) string {
+	g := getGraphLink(tree, len(strconv.Itoa(MaxVal(tree))))
 	return fmt.Sprintf("%v", g)
 }
-func Print(tree TreeNode) {
-	g :=getGraphLink(tree,len(strconv.Itoa(MaxVal(tree))))
+func PrintTree(tree TreeNode) {
+	g := getGraphLink(tree, len(strconv.Itoa(MaxVal(tree))))
 	fmt.Printf("%v", g)
 }
+
 type Graph struct {
-	graph []string
+	graph  []string
 	offSet int
 }
 
@@ -42,12 +42,12 @@ func stringLen(s string) (l int) {
 	return
 }
 
-func (g *Graph) RPush(lines...string) *Graph {
+func (g *Graph) RPush(lines ...string) *Graph {
 	g.graph = append(g.graph, lines...)
 	return g
 }
 
-func (g Graph) LPush(lines...string) Graph{
+func (g Graph) LPush(lines ...string) Graph {
 	g.graph = append(lines, g.graph...)
 	return g
 }
@@ -59,19 +59,19 @@ func (g Graph) Width() int {
 }
 
 func (g Graph) Height() int {
-	if g.graph == nil{
+	if g.graph == nil {
 		return 0
 	}
 	return len(g.graph)
 }
 
-func (g Graph)String() string {
+func (g Graph) String() string {
 	var b strings.Builder
-	fmt.Fprint(&b, fmt.Sprintf("+%s+\n",strings.Repeat("-", g.Width())))
+	fmt.Fprint(&b, fmt.Sprintf("+%s+\n", strings.Repeat("-", g.Width())))
 	for _, l := range g.graph {
 		fmt.Fprintf(&b, fmt.Sprintf("|%s|\n", l))
 	}
-	fmt.Fprint(&b, fmt.Sprintf("+%s+\n",strings.Repeat("-", g.Width())))
+	fmt.Fprint(&b, fmt.Sprintf("+%s+\n", strings.Repeat("-", g.Width())))
 	return b.String()
 }
 
@@ -81,57 +81,57 @@ func getWidth(graph []string) int {
 	}
 	return stringLen(graph[0])
 }
-func layElemS(i, sw, ew int, e string)  string{
-	if i + ew > sw || stringLen(e) > ew{
+func layElemS(i, sw, ew int, e string) string {
+	if i+ew > sw || stringLen(e) > ew {
 		panic("err")
 	}
-	return strings.Repeat(" ", i) + fmt.Sprintf("%-[2]*[1]s",e, ew) + strings.Repeat(" ", sw - i - ew)
+	return strings.Repeat(" ", i) + fmt.Sprintf("%-[2]*[1]s", e, ew) + strings.Repeat(" ", sw-i-ew)
 }
-func layElem(i, sw, ew, e int)  string{
-		if i + ew > sw || stringLen(strconv.Itoa(e)) > ew{
-			panic("err")
-		}
-		return strings.Repeat(" ", i) + fmt.Sprintf("%-[2]*[1]d",e, ew) + strings.Repeat(" ", sw - i - ew)
+func layElem(i, sw, ew, e int) string {
+	if i+ew > sw || stringLen(strconv.Itoa(e)) > ew {
+		panic("err")
+	}
+	return strings.Repeat(" ", i) + fmt.Sprintf("%-[2]*[1]d", e, ew) + strings.Repeat(" ", sw-i-ew)
 }
 
 func getOneValString(t TreeNode, elemWidth int) (graph Graph) {
-	line:= layElem(0, elemWidth, elemWidth,  t.GetVal())
-	o := 0  // 左对齐
-	return Graph{graph:[]string{line}, offSet: o}
+	line := layElem(0, elemWidth, elemWidth, t.GetVal())
+	o := 0 // 左对齐
+	return Graph{graph: []string{line}, offSet: o}
 }
 
 func expandGraph(offset int, graph Graph, left, right, up, down int) (g Graph) {
-	if left < 0 || right < 0 || up < 0 || down < 0 || graph.graph == nil ||  len(graph.graph) == 0 {
+	if left < 0 || right < 0 || up < 0 || down < 0 || graph.graph == nil || len(graph.graph) == 0 {
 		panic("err")
 	}
-	g = Graph{graph: make([]string, len(graph.graph) + up + down), offSet: offset + left}
-	blandLine := strings.Repeat(" ", left + graph.Width() + right)
+	g = Graph{graph: make([]string, len(graph.graph)+up+down), offSet: offset + left}
+	blandLine := strings.Repeat(" ", left+graph.Width()+right)
 	for i := 0; i < up; i++ {
 		g.graph[i] = blandLine
 	}
 	for i, _ := range graph.graph {
-		g.graph[up + i] = strings.Repeat(" ", left) + graph.graph[i] + strings.Repeat(" ", right)
+		g.graph[up+i] = strings.Repeat(" ", left) + graph.graph[i] + strings.Repeat(" ", right)
 	}
-	for i := up + graph.Height(); i < up + graph.Height() + down ; i++ {
+	for i := up + graph.Height(); i < up+graph.Height()+down; i++ {
 		g.graph[i] = blandLine
 	}
 	return g
 }
 
 func mergeTwoGraph(lg Graph, rg Graph, gap int) (lOffset, rOffset int, graph Graph) {
-	if lg.Height() == 0 || rg.Height() == 0 || gap < 0{
+	if lg.Height() == 0 || rg.Height() == 0 || gap < 0 {
 		panic("err")
 	}
 	rOffset = rg.offSet + lg.Width() + gap
 	lOffset = lg.offSet
 	graph = Graph{graph: make([]string, 0)}
 	if lg.Height() < rg.Height() {
-		lg = expandGraph(lg.offSet, lg, 0, 0, 0, rg.Height() - lg.Height())
+		lg = expandGraph(lg.offSet, lg, 0, 0, 0, rg.Height()-lg.Height())
 	} else if lg.Height() > rg.Height() {
-		rg = expandGraph(rg.offSet, rg, 0, 0, 0, lg.Height() - rg.Height())
+		rg = expandGraph(rg.offSet, rg, 0, 0, 0, lg.Height()-rg.Height())
 	}
-	for i:=0; i < lg.Height(); i++{
-		graph.graph = append(graph.graph, lg.graph[i] + strings.Repeat(" ", gap) + rg.graph[i])
+	for i := 0; i < lg.Height(); i++ {
+		graph.graph = append(graph.graph, lg.graph[i]+strings.Repeat(" ", gap)+rg.graph[i])
 	}
 	return
 }
@@ -139,16 +139,16 @@ func genLinkLine(lo, to, ro, w int) string {
 	var x string
 	var o int
 	if ro == -1 {
-		x = "┌" + strings.Repeat("─", to - lo - 1) + "┘"
+		x = "┌" + strings.Repeat("─", to-lo-1) + "┘"
 		o = lo
 	} else if lo == -1 {
-		x = "└" + strings.Repeat("─", ro - to - 1) + "┐"
+		x = "└" + strings.Repeat("─", ro-to-1) + "┐"
 		o = to
 	} else {
-		x = "┌" + strings.Repeat("─", to - lo - 1) + "┴" + strings.Repeat("─", ro - to - 1) + "┐"
+		x = "┌" + strings.Repeat("─", to-lo-1) + "┴" + strings.Repeat("─", ro-to-1) + "┐"
 		o = lo
 	}
-	if o + stringLen(x) > w {
+	if o+stringLen(x) > w {
 		panic("err")
 	}
 	return layElemS(o, w, stringLen(x), x)
@@ -158,7 +158,7 @@ func getGraphLink(t TreeNode, elemWidth int) (graph Graph) {
 	if elemWidth == -1 {
 		elemWidth = stringLen(strconv.Itoa(MaxVal(t)))
 	}
-	if reflect.ValueOf(t).IsNil()|| elemWidth < 1 {
+	if reflect.ValueOf(t).IsNil() || elemWidth < 1 {
 		return
 	}
 	tg := getOneValString(t, elemWidth)
@@ -168,8 +168,8 @@ func getGraphLink(t TreeNode, elemWidth int) (graph Graph) {
 	lg := getGraphLink(t.GetLeft().(TreeNode), elemWidth)
 	rg := getGraphLink(t.GetRight().(TreeNode), elemWidth)
 	if reflect.ValueOf(t.GetRight()).IsNil() {
-		rootLine := layElem(lg.offSet + 2, lg.Width() + 2, elemWidth, t.GetVal())
-		linkline := genLinkLine(lg.offSet, lg.offSet + 2, -1, lg.Width() + 2)
+		rootLine := layElem(lg.offSet+2, lg.Width()+2, elemWidth, t.GetVal())
+		linkline := genLinkLine(lg.offSet, lg.offSet+2, -1, lg.Width()+2)
 		lg = expandGraph(lg.offSet, lg, 0, 2, 0, 0)
 		g := Graph{graph: make([]string, 0), offSet: lg.offSet + 2}
 		g.RPush(rootLine, linkline)
@@ -177,8 +177,8 @@ func getGraphLink(t TreeNode, elemWidth int) (graph Graph) {
 		return g
 	}
 	if reflect.ValueOf(t.GetLeft()).IsNil() {
-		rootLine := layElem(0, rg.Width() + 2, elemWidth, t.GetVal())
-		linkline := genLinkLine(-1, 0, rg.offSet + 2, rg.Width() + 2)
+		rootLine := layElem(0, rg.Width()+2, elemWidth, t.GetVal())
+		linkline := genLinkLine(-1, 0, rg.offSet+2, rg.Width()+2)
 		rg = expandGraph(rg.offSet, rg, 2, 0, 0, 0)
 		g := Graph{graph: make([]string, 0), offSet: 0}
 		g.RPush(rootLine, linkline)
@@ -196,11 +196,13 @@ func getGraphLink(t TreeNode, elemWidth int) (graph Graph) {
 }
 
 func LevelsNode(t TreeNode) [][]TreeNode {
-	if reflect.ValueOf(t).IsNil() {return nil}
+	if reflect.ValueOf(t).IsNil() {
+		return nil
+	}
 	res := [][]TreeNode{}
 	currentLevel := []TreeNode{t}
 	nextLevel := make([]TreeNode, 0)
-	for ;len(currentLevel) > 0; {
+	for len(currentLevel) > 0 {
 		for _, n := range currentLevel {
 			if !reflect.ValueOf(n).IsNil() {
 				nextLevel = append(nextLevel, n.GetLeft().(TreeNode), n.GetRight().(TreeNode))
@@ -219,12 +221,12 @@ func RightStripNil(arr []TreeNode) []TreeNode {
 		return make([]TreeNode, 0)
 	}
 	endIdx := len(arr) - 1
-	for ; endIdx >=0; endIdx-- {
+	for ; endIdx >= 0; endIdx-- {
 		if !reflect.ValueOf(arr[endIdx]).IsNil() {
 			break
 		}
 	}
-	return arr[:endIdx + 1]
+	return arr[:endIdx+1]
 }
 
 func MaxVal(t TreeNode) (res int) {
@@ -245,9 +247,9 @@ func MaxDepth(t TreeNode) int {
 	return max(MaxDepth(t.GetLeft().(TreeNode)), MaxDepth(t.GetRight().(TreeNode))) + 1
 }
 
-func maxInt(num int, nums...int) int {
+func maxInt(num int, nums ...int) int {
 	res := num
-	for _, i:= range nums{
+	for _, i := range nums {
 		if i > res {
 			res = i
 		}
@@ -259,16 +261,16 @@ type NumArr struct {
 	arr []*int
 }
 
-func (a NumArr)String() string {
+func (a NumArr) String() string {
 	var b strings.Builder
 	fmt.Fprint(&b, "[")
-	for idx, i:= range a.arr {
+	for idx, i := range a.arr {
 		if i == nil {
-			fmt.Fprint(&b, "null" )
+			fmt.Fprint(&b, "null")
 		} else {
-			fmt.Fprintf(&b, "%d",*i)
+			fmt.Fprintf(&b, "%d", *i)
 		}
-		if idx != len(a.arr) - 1 {
+		if idx != len(a.arr)-1 {
 			fmt.Fprint(&b, ",")
 		}
 
@@ -307,11 +309,11 @@ func InitTree(t TreeNode, s string) TreeNode {
 					nextLevel = append(nextLevel, n.GetLeft().(TreeNode))
 				}
 				i++
-			} else{
+			} else {
 				break
 			}
 			if i < len(numArr.arr) {
-				if numArr.arr[i] != nil{
+				if numArr.arr[i] != nil {
 					n.SetRight(t.Constructor(*numArr.arr[i]))
 					nextLevel = append(nextLevel, n.GetRight().(TreeNode))
 				}
@@ -328,10 +330,10 @@ func InitTree(t TreeNode, s string) TreeNode {
 func exactInt(s string) NumArr {
 	res := make([]*int, 0)
 	elems := exactElem(s)
-	for _, i:= range elems {
+	for _, i := range elems {
 		if i == "null" {
 			res = append(res, nil)
-		} else{
+		} else {
 			num, err := strconv.Atoi(i)
 			if err == nil {
 				res = append(res, &num)

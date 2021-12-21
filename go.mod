@@ -1,15 +1,38 @@
 module github.com/sally-langshuang/FetcherEngine
 
-go 1.16
+go 1.18
 
 require (
-	github.com/agiledragon/gomonkey v2.1.0+incompatible
-	github.com/badgerodon/collections v0.0.0-20130729185459-604e922904d3 // indirect
-	github.com/blevesearch/bleve/v2 v2.2.2 // indirect
-	github.com/elastic/go-elasticsearch/v7 v7.15.1 // indirect
-	github.com/elastic/go-elasticsearch/v8 v8.0.0-20210608143047-aa1301e7ba9d // indirect
-	github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3 // indirect
-	github.com/hashicorp/golang-lru v0.5.4 // indirect
-	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
+	github.com/blevesearch/bleve/v2 v2.2.2
+	github.com/elastic/go-elasticsearch/v8 v8.0.0-20210608143047-aa1301e7ba9d
+	github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3
 	github.com/smartystreets/goconvey v1.6.4
+)
+
+require (
+	github.com/RoaringBitmap/roaring v0.9.4 // indirect
+	github.com/agiledragon/gomonkey/v2 v2.2.0 // indirect
+	github.com/bits-and-blooms/bitset v1.2.0 // indirect
+	github.com/blevesearch/bleve_index_api v1.0.1 // indirect
+	github.com/blevesearch/go-porterstemmer v1.0.3 // indirect
+	github.com/blevesearch/mmap-go v1.0.3 // indirect
+	github.com/blevesearch/scorch_segment_api/v2 v2.1.0 // indirect
+	github.com/blevesearch/segment v0.9.0 // indirect
+	github.com/blevesearch/snowballstem v0.9.0 // indirect
+	github.com/blevesearch/upsidedown_store_api v1.0.1 // indirect
+	github.com/blevesearch/vellum v1.0.7 // indirect
+	github.com/blevesearch/zapx/v11 v11.3.1 // indirect
+	github.com/blevesearch/zapx/v12 v12.3.1 // indirect
+	github.com/blevesearch/zapx/v13 v13.3.1 // indirect
+	github.com/blevesearch/zapx/v14 v14.3.1 // indirect
+	github.com/blevesearch/zapx/v15 v15.3.1 // indirect
+	github.com/golang/protobuf v1.3.2 // indirect
+	github.com/golang/snappy v0.0.1 // indirect
+	github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1 // indirect
+	github.com/jtolds/gls v4.20.0+incompatible // indirect
+	github.com/mschoch/smat v0.2.0 // indirect
+	github.com/smartystreets/assertions v0.0.0-20180927180507-b2de0cb4f26d // indirect
+	github.com/steveyen/gtreap v0.1.0 // indirect
+	go.etcd.io/bbolt v1.3.5 // indirect
+	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd // indirect
 )
