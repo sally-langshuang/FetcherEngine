@@ -32,11 +32,10 @@ func TestNum34(t *testing.T) {
 	}{
 		//{tree.InitTree("[5,2,3,4]"), 2, 12},
 		//{tree.InitTree("[4,1,3,9,null,null,2]"), 2, 16},
-		{tree.InitTree("[7,3,4,4,1,7,4,7,5,null,null,2]"), 6, 41},
+		{tree.InitTree("[6,null,10,6,6,2,9,3,3,1,9]"), 5, 49},
 		//{tree.InitTree("[7,4,5]"), 2, 12},
 	}
 	for _, x := range datas {
-		//x.tree.Print()
 		fmt.Println(maxValue(x.tree, x.k) == x.ans)
 	}
 }

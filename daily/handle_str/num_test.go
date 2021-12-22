@@ -6,6 +6,20 @@ import (
 	"testing"
 )
 
+func TestNum686(t *testing.T) {
+	datas := []struct {
+		a, b string
+		ans  int
+	}{
+		{"abcd", "cdabcdab", 3},
+		{"a", "aa", 2},
+		{"a", "a", 1},
+		{"abc", "wxyz", -1},
+	}
+	for _, x := range datas {
+		fmt.Println(repeatedStringMatch(x.a, x.b) == x.ans)
+	}
+}
 func TestNum1154(t *testing.T) {
 	dayOfYear("2004-03-01")
 }
