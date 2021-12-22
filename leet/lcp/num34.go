@@ -4,31 +4,44 @@ import (
 	. "github.com/sally-langshuang/FetcherEngine/leet/tree"
 )
 
-// x为最多与root相连的个数 k为最多相连的个数
-func dp(root *TreeNode, x, k int, f *map[*TreeNode]map[int]int) int {
-	if root == nil || k == 0 {
-		return 0
-	}
-	if r, ok := (*f)[root]; ok {
-		if _, ok := r[x]; ok {
-			return (*f)[root][x]
-		}
-	} else {
-		(*f)[root] = make(map[int]int, 0)
-	}
-	ans := dp(root.Left, k, k, f) + dp(root.Right, k, k, f)
-	for i := 0; i <= x-1; i++ {
-		j := x - 1 - i
-		if a := dp(root.Left, i, k, f) + root.Val + dp(root.Right, j, k, f); a > ans {
-			ans = a
+func max(nums []int) int {
+	var ans int
+	for i := range nums {
+		if nums[i] > ans {
+			ans = nums[i]
 		}
 	}
-	(*f)[root][x] = ans
-	return (*f)[root][x]
+	return ans
+}
+
+// k为最多相连的个数 ans[i]表示为最多与root相连的i个数的val和
+func dp(root *TreeNode, k int, f *map[*TreeNode][]int) []int {
+	if (*f)[root] != nil {
+		return (*f)[root]
+	}
+	ans := make([]int, k+1)
+	if root == nil {
+		return ans
+	}
+	ans[0] = max(dp(root.Left, k, f)) + max(dp(root.Right, k, f))
+	for i := 1; i <= k; i++ {
+		for l := 0; l < i; l++ {
+			if v := dp(root.Left, k, f)[l] + root.Val + dp(root.Right, k, f)[i-1-l]; v > ans[i] {
+				ans[i] = v
+			}
+		}
+	}
+	(*f)[root] = ans
+	return ans
 }
 
 func maxValue(root *TreeNode, k int) int {
-	f := map[*TreeNode]map[int]int{}
-	ans := dp(root, k, k, &f)
+	f := make(map[*TreeNode][]int)
+	var ans int
+	for _, a := range dp(root, k, &f) {
+		if a > ans {
+			ans = a
+		}
+	}
 	return ans
 }
