@@ -6,6 +6,21 @@ import (
 	"testing"
 )
 
+func TestNum1044(t *testing.T) {
+	datas := []struct {
+		s, ans string
+	}{
+		{"banana", "ana"},
+		{"abcd", ""},
+	}
+	for _, d := range datas {
+		if v := longestDupSubstring(d.s); v != d.ans {
+			fmt.Printf("%s != %s", v, d.ans)
+		} else {
+			fmt.Println("yes")
+		}
+	}
+}
 func TestNum686(t *testing.T) {
 	datas := []struct {
 		a, b string

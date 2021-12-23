@@ -11,6 +11,28 @@ import (
 	"time"
 )
 
+func TestNum1606(t *testing.T) {
+	datas := []struct {
+		k       int
+		arrival []int
+		load    []int
+		ans     []int
+	}{
+		{3, []int{1, 2, 3, 4, 5}, []int{5, 2, 3, 3, 3}, []int{1}},
+		{3, []int{1, 2, 3, 4}, []int{1, 2, 1, 2}, []int{0}},
+		{3, []int{1, 2, 3}, []int{10, 12, 11}, []int{0, 1, 2}},
+		{3, []int{1, 2, 3, 4, 8, 9, 10}, []int{5, 2, 10, 3, 1, 2, 2}, []int{1}},
+		{1, []int{1}, []int{1}, []int{0}},
+	}
+	for _, d := range datas {
+		if v := busiestServers(d.k, d.arrival, d.load); !reflect.DeepEqual(v, d.ans) {
+			fmt.Printf("%v != %v\n", v, d.ans)
+		} else {
+			fmt.Println("yes")
+		}
+	}
+}
+
 type Peple struct {
 	Name string `json:"name"`
 }
@@ -19,7 +41,6 @@ func (p *Peple) Do(say string) string {
 	return say
 }
 func TestG(t *testing.T) {
-	fmt.Printf("%T %S", 3*time.Second, "a")
 	Convey("TestRedisLock", t, func() {
 		Convey("set expire success", func() {
 			p := Peple{Name: "abc"}
