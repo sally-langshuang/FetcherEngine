@@ -11,6 +11,13 @@ import (
 	"time"
 )
 
+func TestNum825(t *testing.T) {
+	fmt.Println(numFriendRequests([]int{16, 16}) == 2)
+	fmt.Println(numFriendRequests([]int{16, 17, 18}) == 2)
+	fmt.Println(numFriendRequests([]int{118, 14, 7, 63, 103}) == 2)
+	fmt.Println(numFriendRequests([]int{101, 102}) == 1)
+	fmt.Println(numFriendRequests([]int{81, 106, 11, 66, 83, 113, 51, 62, 47, 42, 85, 94, 78, 96, 51, 14, 3, 111, 57, 66, 8, 113, 27, 61, 21, 55, 87, 15, 20, 23, 14, 105, 38, 85, 2, 108, 103, 46, 44, 27, 79, 108, 106, 86, 113, 24, 39, 8, 7, 97}) == 434)
+}
 func TestNum1606(t *testing.T) {
 	datas := []struct {
 		k       int
