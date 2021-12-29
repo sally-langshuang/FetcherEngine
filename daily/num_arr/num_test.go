@@ -11,6 +11,22 @@ import (
 	"time"
 )
 
+func TestNum1995(t *testing.T) {
+	datas := []struct {
+		nums     []int
+		expected int
+	}{
+		{[]int{1, 1, 1, 3, 5}, 4},
+		{[]int{3, 3, 6, 4, 5}, 0},
+		{[]int{1, 2, 3, 6}, 1},
+		{[]int{28, 8, 49, 85, 37, 90, 20, 8}, 1},
+	}
+	for _, d := range datas {
+		if actual := countQuadruplets(d.nums); actual != d.expected {
+			t.Logf("%v != %v", actual, d.expected)
+		}
+	}
+}
 func TestNum825(t *testing.T) {
 	fmt.Println(numFriendRequests([]int{16, 16}) == 2)
 	fmt.Println(numFriendRequests([]int{16, 17, 18}) == 2)

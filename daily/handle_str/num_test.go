@@ -1,11 +1,78 @@
 package handle_str
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
+	"runtime/debug"
 	"testing"
 )
 
+type MyErr struct{}
+
+func (e *MyErr) Error() string {
+	return errors.New("").Error()
+}
+
+func TestNumA(t *testing.T) {
+	defer func() {
+		for {
+			if err := recover(); err != nil {
+				fmt.Println("==>", string(debug.Stack()), "<==")
+				fmt.Println(err)
+			} else {
+				fmt.Println("ok")
+				break
+			}
+		}
+
+	}()
+	var x any = 123
+	panic(x)
+	fmt.Println("xyz")
+	//x, y := 1, 2
+	//defer func(a *int) { fmt.Println(*a, y) }(&x)
+	//x += 100
+	//y += 100
+	//fmt.Println(x, y)
+	//var x int
+	//f := func() (func(), func()) {
+	//	return func() {
+	//			fmt.Println(x)
+	//			x++
+	//		}, func() {
+	//			fmt.Println(x)
+	//		}
+	//}
+	//a, b := f()
+	//a()
+	//b()
+
+	//fmt.Println(x)
+	//arr := [2]func(){}
+	//i := 0
+	//for i = range arr {
+	//	arr[i] = func() {
+	//		fmt.Println(i)
+	//	}
+	//}
+	//for i := range arr {
+	//	arr[i]() //1 1
+	//}
+	//x := []int{1, 2, 3, 4}
+	//f := func() {
+	//	pop := 0
+	//	for i := range x {
+	//		i -= pop
+	//		if x[i]%2 == 0 {
+	//			x = append(x[:i], x[i+1:]...)
+	//			pop++
+	//		}
+	//	}
+	//}
+	//f()
+	//fmt.Println(x)
+}
 func TestNum472(t *testing.T) {
 	datas := []struct {
 		words []string
@@ -21,8 +88,6 @@ func TestNum472(t *testing.T) {
 		expected := findAllConcatenatedWordsInADict0(d.words)
 		if ans := findAllConcatenatedWordsInADict(d.words); !reflect.DeepEqual(toMap(ans), toMap(expected)) {
 			fmt.Printf("wrong == > \n%v \n%v\n", ans, expected)
-		} else {
-			fmt.Printf("ok ! %v == %v\n", ans, expected)
 		}
 	}
 }
