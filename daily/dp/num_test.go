@@ -7,6 +7,34 @@ import (
 	"testing"
 )
 
+func TestNum120(t *testing.T) {
+	datas := []struct {
+		triangle [][]int
+		expected int
+	}{
+		{[][]int{{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}}, 11},
+		{[][]int{{-10}}, -10},
+	}
+	for _, d := range datas {
+		if actual := minimumTotal(d.triangle); actual != d.expected {
+			t.Fatalf("%v != %v", actual, d.expected)
+		}
+	}
+}
+func TestNum64(t *testing.T) {
+	datas := []struct {
+		grid     [][]int
+		expected int
+	}{
+		{[][]int{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}, 7},
+		{[][]int{{1, 2, 3}, {4, 5, 6}}, 12},
+	}
+	for _, d := range datas {
+		if actual := minPathSum(d.grid); actual != d.expected {
+			t.Fatalf("%v != %v", actual, d.expected)
+		}
+	}
+}
 func TestNum62(t *testing.T) {
 	fmt.Println(int(new(big.Int).Binomial(int64(5), int64(3)).Int64()))
 	datas := []struct {
