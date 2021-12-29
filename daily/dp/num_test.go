@@ -7,6 +7,65 @@ import (
 	"testing"
 )
 
+func TestNum1575(t *testing.T) {
+	datas := []struct {
+		locations           []int
+		start, finish, fuel int
+		expected            int
+	}{
+		{[]int{2, 3, 6, 8, 4}, 1, 3, 5, 4},
+		//解释：以下为所有可能路径，每一条都用了 5 单位的汽油：
+		//1 -> 3
+		//1 -> 2 -> 3
+		//1 -> 4 -> 3
+		//1 -> 4 -> 2 -> 3
+		{[]int{4, 3, 1}, 1, 0, 6, 5},
+		//1 -> 0，使用汽油量为 fuel = 1
+		//1 -> 2 -> 0，使用汽油量为 fuel = 5
+		//1 -> 2 -> 1 -> 0，使用汽油量为 fuel = 5
+		//1 -> 0 -> 1 -> 0，使用汽油量为 fuel = 3
+		//1 -> 0 -> 1 -> 0 -> 1 -> 0，使用汽油量为 fuel = 5
+		{[]int{5, 2, 1}, 0, 2, 3, 0},
+		//解释：没有办法只用 3 单位的汽油从 0 到达 2 。因为最短路径需要 4 单位的汽油。
+		{[]int{2, 1, 5}, 0, 0, 3, 2},
+		//解释：总共有两条可行路径，0 和 0 -> 1 -> 0 。
+		{[]int{1, 2, 3}, 0, 2, 40, 615088286},
+		//解释：路径总数为 2615088300 。将结果对 10^9 + 7 取余，得到 615088286 。
+	}
+	for _, d := range datas {
+		if actual := countRoutes(d.locations, d.start, d.finish, d.fuel); actual != d.expected {
+			t.Fatalf("%v != %v", actual, d.expected)
+		}
+	}
+}
+func TestNum1289(t *testing.T) {
+	datas := []struct {
+		matrix   [][]int
+		expected int
+	}{
+		{[][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, 13},
+	}
+	for _, d := range datas {
+		if actual := minFallingPathSum(d.matrix); actual != d.expected {
+			t.Fatalf("%v != %v", actual, d.expected)
+		}
+	}
+}
+func TestNum931(t *testing.T) {
+	datas := []struct {
+		matrix   [][]int
+		expected int
+	}{
+		{[][]int{{2, 1, 3}, {6, 5, 4}, {7, 8, 9}}, 13},
+		{[][]int{{-19, 57}, {-40, -5}}, -59},
+		{[][]int{{-48}}, -48},
+	}
+	for _, d := range datas {
+		if actual := minFallingPathSum0(d.matrix); actual != d.expected {
+			t.Fatalf("%v != %v", actual, d.expected)
+		}
+	}
+}
 func TestNum120(t *testing.T) {
 	datas := []struct {
 		triangle [][]int
