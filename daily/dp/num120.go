@@ -1,15 +1,22 @@
 package dp
 
 func minimumTotal(triangle [][]int) (total int) {
-	total = triangle[0][0]
 	for i := 1; i < len(triangle); i++ {
-		minVal := triangle[i][0]
-		for j := 1; j < len(triangle[i]); j++ {
-			if triangle[i][j] < minVal {
-				minVal = triangle[i][j]
+		for j := range triangle[i] {
+			if j == 0 {
+				triangle[i][j] += triangle[i-1][j]
+			} else if j == len(triangle[i])-1 {
+				triangle[i][j] += triangle[i-1][j-1]
+			} else {
+				triangle[i][j] += min(triangle[i-1][j], triangle[i-1][j-1])
 			}
 		}
-		total += minVal
+	}
+	total = triangle[len(triangle)-1][0]
+	for _, x := range triangle[len(triangle)-1][1:] {
+		if x < total {
+			total = x
+		}
 	}
 	return total
 }

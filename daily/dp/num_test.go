@@ -71,8 +71,9 @@ func TestNum120(t *testing.T) {
 		triangle [][]int
 		expected int
 	}{
-		{[][]int{{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}}, 11},
-		{[][]int{{-10}}, -10},
+		//{[][]int{{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}}, 11},
+		//{[][]int{{-10}}, -10},
+		{[][]int{{-1}, {2, 3}, {1, -1, -3}}, -1},
 	}
 	for _, d := range datas {
 		if actual := minimumTotal(d.triangle); actual != d.expected {

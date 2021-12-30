@@ -11,6 +11,22 @@ import (
 	"time"
 )
 
+func TestNum846(t *testing.T) {
+	datas := []struct {
+		hand      []int
+		groupSize int
+		expected  bool
+	}{
+		{[]int{1, 2, 3, 6, 2, 3, 4, 7, 8}, 3, true},
+		{[]int{1, 2, 3, 4, 5}, 4, false},
+		{[]int{1, 2, 3}, 1, true},
+	}
+	for _, d := range datas {
+		if actual := isNStraightHand(d.hand, d.groupSize); actual != d.expected {
+			t.Logf("%v != %v", actual, d.expected)
+		}
+	}
+}
 func TestNum1995(t *testing.T) {
 	datas := []struct {
 		nums     []int
