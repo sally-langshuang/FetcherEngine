@@ -4,32 +4,41 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+	"unsafe"
 )
 
-func TestNum807(t *testing.T)  {
-	datas := []struct{
+func TestNum807(t *testing.T) {
+	datas := []struct {
 		grid [][]int
-		ans int
+		ans  int
 	}{
-		{[][]int{{3,0,8,4},{2,4,5,7},{9,2,6,3},{0,3,1,0}}, 35},
+		{[][]int{{3, 0, 8, 4}, {2, 4, 5, 7}, {9, 2, 6, 3}, {0, 3, 1, 0}}, 35},
 	}
-	for i:= range datas {
+	for i := range datas {
 		fmt.Println(maxIncreaseKeepingSkyline(datas[i].grid) == datas[i].ans)
 	}
+}
 
-}
 func TestA(t *testing.T) {
-	fmt.Println(!true || false)
-	fmt.Println(!false && true)
-	fmt.Println(4 % 2)
+	s1 := "abc"
+	s3 := s1[1:]
+	s4 := s1[:1]
+	s2 := "abcd"
+	fmt.Printf("%#v\n", (*reflect.StringHeader)(unsafe.Pointer(&s1)))
+	fmt.Printf("%#v\n", (*reflect.StringHeader)(unsafe.Pointer(&s2)))
+	fmt.Printf("%#v\n", (*reflect.StringHeader)(unsafe.Pointer(&s3)))
+	fmt.Printf("%#v\n", (*reflect.StringHeader)(unsafe.Pointer(&s4)))
+	//fmt.Println(!true || false)
+	//fmt.Println(!false && true)
+	//fmt.Println(4 % 2)
 }
-func TestNum794(t *testing.T)  {
+func TestNum794(t *testing.T) {
 	datas := []struct {
 		board []string
-		ans bool
-	} {
-		{[]string{"XXX","OOX","OOX"}, true},
-		{[]string{"XXO","XOX","OXO"}, false},
+		ans   bool
+	}{
+		{[]string{"XXX", "OOX", "OOX"}, true},
+		{[]string{"XXO", "XOX", "OXO"}, false},
 	}
 	for _, x := range datas {
 		fmt.Println(validTicTacToe(x.board) == x.ans)

@@ -11,6 +11,13 @@ import (
 	"time"
 )
 
+func TestNum390(t *testing.T) {
+	for i := 1; i <= 128; i++ {
+		fmt.Printf("---i=%d---\n", i)
+		fmt.Println(lastRemaining(i))
+	}
+
+}
 func TestNum846(t *testing.T) {
 	datas := []struct {
 		hand      []int
